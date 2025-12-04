@@ -2089,12 +2089,22 @@
         }
 
         // Formater les pièces pour le kitting
+        // Utilise: OT Lié, Référence, Désignation
         function formatPiecesForKitting(pieces) {
             return pieces.map(p => {
-                const qty = p.quantite || 1;
-                const ref = p.reference || '';
-                const designation = p.designation || '';
-                return `${designation}${ref ? ' (' + ref + ')' : ''} x${qty}`;
+                const ref = (p.reference || '').trim();
+                const designation = (p.designation || '').trim();
+
+                // Format: "Référence - Désignation" ou juste "Désignation" si pas de référence
+                if (ref && designation) {
+                    return `${ref} - ${designation}`;
+                } else if (ref) {
+                    return ref;
+                } else if (designation) {
+                    return designation;
+                } else {
+                    return 'Pièce sans description';
+                }
             }).join('\n');
         }
 
