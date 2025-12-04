@@ -9,11 +9,26 @@
     "orientation": "any",
     "icons": [
         {
-            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231a237e' width='192' height='192' rx='24'/><path fill='white' d='M96 30c-36.5 0-66 29.5-66 66s29.5 66 66 66 66-29.5 66-66-29.5-66-66-66zm-11 99H63V93h22v36zm22 0H85V63h22v66zm22 0h-22V78h22v51z'/></svg>",
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%231a237e' width='512' height='512' rx='64'/%3E%3Cpath fill='%23ff6f00' d='M128 160h256v32H128z'/%3E%3Cpath fill='white' d='M112 192h288v192H112z'/%3E%3Cpath fill='%231a237e' d='M144 224h64v48h-64zm80 0h64v48h-64zm80 0h64v48h-64zm-160 64h64v48h-64zm80 0h64v48h-64zm80 0h64v48h-64z'/%3E%3Cpath fill='%23ff6f00' d='M208 128h96v32h-96z'/%3E%3C/svg%3E",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%231a237e' width='192' height='192' rx='24'/%3E%3Cpath fill='%23ff6f00' d='M48 60h96v12H48z'/%3E%3Cpath fill='white' d='M42 72h108v72H42z'/%3E%3Cpath fill='%231a237e' d='M54 84h24v18H54zm30 0h24v18H84zm30 0h24v18h-24zM54 108h24v18H54zm30 0h24v18H84zm30 0h24v18h-24z'/%3E%3Cpath fill='%23ff6f00' d='M78 48h36v12H78z'/%3E%3C/svg%3E",
             "sizes": "192x192",
-            "type": "image/svg+xml"
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%231a237e' width='512' height='512'/%3E%3Cpath fill='%23ff6f00' d='M128 160h256v32H128z'/%3E%3Cpath fill='white' d='M112 192h288v192H112z'/%3E%3Cpath fill='%231a237e' d='M144 224h64v48h-64zm80 0h64v48h-64zm80 0h64v48h-64zm-160 64h64v48h-64zm80 0h64v48h-64zm80 0h64v48h-64z'/%3E%3Cpath fill='%23ff6f00' d='M208 128h96v32h-96z'/%3E%3C/svg%3E",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
         }
     ],
     "categories": ["productivity", "utilities"],
-    "lang": "fr"
+    "lang": "fr",
+    "scope": "./",
+    "prefer_related_applications": false
 }
