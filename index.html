@@ -1637,9 +1637,11 @@
                     <label class="form-label">Numéro d'Ordre (OT) *</label>
                     <div style="display: flex; gap: 0.5rem;">
                         <input type="text" class="form-input" id="newOrdre" placeholder="Ex: 123456" style="flex: 1;" oninput="checkOTForPieces()">
-                        <button type="button" class="btn btn-secondary" onclick="loadPiecesForOT()" title="Charger pièces depuis Arrêt Annuel">📦</button>
+                        <button type="button" class="btn btn-secondary" id="btnLoadPieces" onclick="loadPiecesForOT()" title="Charger pièces depuis Arrêt Annuel" style="position: relative;">
+                            📦
+                            <span id="piecesBadge" style="display: none; position: absolute; top: -5px; right: -5px; width: 18px; height: 18px; background: #2e7d32; color: white; border-radius: 50%; font-size: 11px; font-weight: bold; line-height: 18px; text-align: center;">✓</span>
+                        </button>
                     </div>
-                    <div id="otPiecesInfo" style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-light);"></div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Description</label>
@@ -2111,18 +2113,20 @@
         // Vérifier si l'OT a des pièces associées (appelé à chaque frappe)
         function checkOTForPieces() {
             const otNumber = document.getElementById('newOrdre').value.trim();
-            const infoDiv = document.getElementById('otPiecesInfo');
+            const badge = document.getElementById('piecesBadge');
 
             if (otNumber.length < 2) {
-                infoDiv.innerHTML = '';
+                badge.style.display = 'none';
                 return;
             }
 
             const pieces = getPiecesForOT(otNumber);
             if (pieces.length > 0) {
-                infoDiv.innerHTML = `<span style="color: var(--success);">✓ ${pieces.length} pièce(s) trouvée(s) pour cet OT - Cliquez 📦 pour charger</span>`;
+                badge.style.display = 'block';
+                badge.textContent = pieces.length > 9 ? '9+' : pieces.length;
+                badge.title = `${pieces.length} pièce(s) trouvée(s)`;
             } else {
-                infoDiv.innerHTML = `<span style="color: var(--text-light);">Aucune pièce trouvée pour cet OT</span>`;
+                badge.style.display = 'none';
             }
         }
 
