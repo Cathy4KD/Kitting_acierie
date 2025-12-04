@@ -1,0 +1,19 @@
+{
+    "name": "Suivi Kitting - Aciérie",
+    "short_name": "Kitting",
+    "description": "Application de suivi des kittings de pièces pour l'aciérie",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#f5f5f5",
+    "theme_color": "#1a237e",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231a237e' width='192' height='192' rx='24'/><path fill='white' d='M96 30c-36.5 0-66 29.5-66 66s29.5 66 66 66 66-29.5 66-66-29.5-66-66-66zm-11 99H63V93h22v36zm22 0H85V63h22v66zm22 0h-22V78h22v51z'/></svg>",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        }
+    ],
+    "categories": ["productivity", "utilities"],
+    "lang": "fr"
+}
