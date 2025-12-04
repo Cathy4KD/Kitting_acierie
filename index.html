@@ -589,6 +589,83 @@
             border: none;
             cursor: pointer;
             padding: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Mobile optimizations for pieces */
+        @media (max-width: 480px) {
+            .piece-item {
+                flex-wrap: wrap;
+                padding: 0.5rem;
+                gap: 0.5rem;
+            }
+
+            .piece-checkbox {
+                width: 28px;
+                height: 28px;
+                flex-shrink: 0;
+            }
+
+            .piece-name {
+                flex: 1;
+                min-width: 0;
+                font-size: 0.9rem;
+                word-break: break-word;
+                order: 1;
+            }
+
+            .piece-quantity {
+                order: 3;
+                width: 100%;
+                justify-content: flex-start;
+                padding-left: 38px;
+                margin-top: 0.25rem;
+            }
+
+            .piece-quantity-input {
+                width: 70px;
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .piece-quantity-display {
+                font-size: 0.9rem;
+                min-width: 50px;
+            }
+
+            .piece-remove {
+                order: 2;
+                padding: 0.25rem;
+            }
+
+            .piece-remove svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            /* Section pièces en pleine largeur sur mobile */
+            .pieces-section {
+                grid-column: 1 / -1 !important;
+            }
+
+            .pieces-section h3 {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Tablet optimizations */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .piece-item {
+                gap: 0.5rem;
+            }
+
+            .piece-quantity-input {
+                width: 65px;
+            }
         }
 
         /* OCR Results */
@@ -1231,6 +1308,150 @@
             overflow-y: auto;
         }
 
+        /* Sub-zones grid layout */
+        .zone-subzones {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 6px;
+            margin-top: 0.5rem;
+        }
+
+        .sub-zone {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem;
+            min-height: 60px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sub-zone:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .sub-zone.has-kitting {
+            border-color: var(--primary);
+        }
+
+        .sub-zone.has-pret {
+            border-color: var(--success);
+            background: rgba(232, 245, 233, 0.9);
+        }
+
+        .sub-zone.has-incomplet {
+            border-color: var(--warning);
+            background: rgba(255, 243, 224, 0.9);
+        }
+
+        .sub-zone-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sub-zone-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sub-zone-kitting {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.35rem;
+            border-radius: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        .sub-zone-kitting.pret {
+            background: var(--success);
+            color: white;
+        }
+
+        .sub-zone-kitting.incomplet {
+            background: var(--warning);
+            color: white;
+        }
+
+        .sub-zone-empty {
+            font-size: 0.6rem;
+            color: var(--text-light);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Arrow buttons for subzone reordering */
+        .btn-arrow {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 0;
+            width: 20px;
+            height: 16px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            line-height: 1;
+            color: var(--text-light);
+            transition: all 0.15s;
+        }
+
+        .btn-arrow:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .subzone-edit-item {
+            transition: background 0.15s;
+        }
+
+        .subzone-edit-item:hover {
+            background: var(--primary-light) !important;
+        }
+
+        .subzone-name-input {
+            border: 1px solid transparent !important;
+            background: transparent !important;
+        }
+
+        .subzone-name-input:focus {
+            border-color: var(--primary) !important;
+            background: white !important;
+        }
+
+        /* Zone edit button */
+        .zone-edit-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 3px 5px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zone-edit-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         .map-kitting {
             padding: 0.35rem 0.5rem;
             border-radius: 4px;
@@ -1683,8 +1904,14 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Zone de Stockage *</label>
-                    <select class="form-select" id="newLocation">
+                    <select class="form-select" id="newLocation" onchange="updateSubZoneSelect()">
                         <option value="">-- Sélectionner une zone --</option>
+                    </select>
+                </div>
+                <div class="form-group" id="subZoneGroup" style="display: none;">
+                    <label class="form-label">Case / Étagère</label>
+                    <select class="form-select" id="newSubZone">
+                        <option value="">-- Aucune (zone générale) --</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -1886,48 +2113,75 @@
     <div class="modal-overlay" id="zoneConfigModal">
         <div class="modal">
             <div class="modal-header">
-                <h2>Ajouter une Zone</h2>
+                <h2>Ajouter une Zone Générale</h2>
                 <button class="modal-close" onclick="closeModal('zoneConfigModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">Nom de la zone *</label>
-                    <input type="text" class="form-input" id="newZoneName" placeholder="Ex: Zone A, Rack 1, Étagère Nord...">
+                    <label class="form-label">Nom de la zone générale *</label>
+                    <input type="text" class="form-input" id="newZoneName" placeholder="Ex: Zone A, Secteur Nord...">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Dimensions (en pixels)</label>
                     <div style="display: flex; gap: 0.5rem; align-items: center;">
-                        <input type="number" class="form-input" id="newZoneWidth" min="100" max="400" value="150" style="width: 100px;">
+                        <input type="number" class="form-input" id="newZoneWidth" min="150" max="500" value="200" style="width: 100px;">
                         <span>x</span>
-                        <input type="number" class="form-input" id="newZoneHeight" min="80" max="300" value="120" style="width: 100px;">
+                        <input type="number" class="form-input" id="newZoneHeight" min="120" max="400" value="180" style="width: 100px;">
                     </div>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;">
-                    La zone sera placée au centre du plan. Utilisez le mode édition pour la déplacer.
-                </p>
+                <div class="form-group">
+                    <label class="form-label">Sous-zones / Cases / Étagères</label>
+                    <div id="newSubZonesList" style="margin-bottom: 0.5rem;"></div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" class="form-input" id="newSubZoneName" placeholder="Nom de la case/étagère" style="flex: 1;">
+                        <button type="button" class="btn btn-secondary" onclick="addSubZoneToNew()">+ Ajouter</button>
+                    </div>
+                    <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.25rem;">
+                        Les sous-zones permettent d'organiser les kittings à l'intérieur de la zone générale.
+                    </p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('zoneConfigModal')">Annuler</button>
-                <button class="btn btn-primary" onclick="addNewZone()">Ajouter</button>
+                <button class="btn btn-primary" onclick="addNewZone()">Créer la Zone</button>
             </div>
         </div>
     </div>
 
     <!-- Edit Zone Modal -->
     <div class="modal-overlay" id="editZoneModal">
-        <div class="modal">
+        <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
                 <h2>Modifier la Zone</h2>
                 <button class="modal-close" onclick="closeModal('editZoneModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">Nom de la zone</label>
+                    <label class="form-label">Nom de la zone générale</label>
                     <input type="text" class="form-input" id="editZoneName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Dimensions (pixels)</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="number" class="form-input" id="editZoneWidth" min="150" max="500" style="width: 100px;">
+                        <span>x</span>
+                        <input type="number" class="form-input" id="editZoneHeight" min="120" max="400" style="width: 100px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sous-zones / Cases / Étagères</label>
+                    <p style="font-size: 0.75rem; color: var(--text-light); margin-bottom: 0.5rem;">
+                        Cliquez sur le nom d'une sous-zone pour la renommer. Utilisez les flèches pour réordonner.
+                    </p>
+                    <div id="editSubZonesList" style="margin-bottom: 0.5rem; max-height: 200px; overflow-y: auto;"></div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" class="form-input" id="editSubZoneName" placeholder="Nouvelle case/étagère" style="flex: 1;">
+                        <button type="button" class="btn btn-secondary" onclick="addSubZoneToEdit()">+ Ajouter</button>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" onclick="deleteCurrentZone()" style="margin-right: auto;">Supprimer</button>
+                <button class="btn btn-danger" onclick="deleteCurrentZone()" style="margin-right: auto;">Supprimer Zone</button>
                 <button class="btn btn-outline" onclick="closeModal('editZoneModal')">Annuler</button>
                 <button class="btn btn-primary" onclick="saveEditedZone()">Enregistrer</button>
             </div>
@@ -1943,9 +2197,15 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">Sélectionner la nouvelle zone</label>
-                    <select class="form-select" id="editLocationSelect">
+                    <label class="form-label">Sélectionner la zone</label>
+                    <select class="form-select" id="editLocationSelect" onchange="updateEditLocationSubZone()">
                         <option value="">-- Sélectionner une zone --</option>
+                    </select>
+                </div>
+                <div class="form-group" id="editLocationSubZoneGroup" style="display: none;">
+                    <label class="form-label">Case / Étagère</label>
+                    <select class="form-select" id="editLocationSubZone">
+                        <option value="">-- Aucune (zone générale) --</option>
                     </select>
                 </div>
             </div>
@@ -2045,21 +2305,34 @@
         let currentPage = 'pageList';
         let isOnline = navigator.onLine;
 
-        // Zone configuration with positions
+        // Zone configuration with positions and sub-zones
         let zoneConfig = {
             zones: [
-                { id: 'zone-a', name: 'Zone A', x: 50, y: 50, width: 150, height: 120 },
-                { id: 'zone-b', name: 'Zone B', x: 220, y: 50, width: 150, height: 120 },
-                { id: 'zone-c', name: 'Zone C', x: 390, y: 50, width: 150, height: 120 },
-                { id: 'zone-d', name: 'Zone D', x: 50, y: 190, width: 150, height: 120 },
-                { id: 'zone-e', name: 'Zone E', x: 220, y: 190, width: 150, height: 120 },
-                { id: 'zone-f', name: 'Zone F', x: 390, y: 190, width: 150, height: 120 }
+                {
+                    id: 'zone-a', name: 'Zone A', x: 50, y: 50, width: 200, height: 180,
+                    subZones: [
+                        { id: 'zone-a-1', name: 'Case 1' },
+                        { id: 'zone-a-2', name: 'Case 2' },
+                        { id: 'zone-a-3', name: 'Case 3' }
+                    ]
+                },
+                {
+                    id: 'zone-b', name: 'Zone B', x: 270, y: 50, width: 200, height: 180,
+                    subZones: [
+                        { id: 'zone-b-1', name: 'Étagère 1' },
+                        { id: 'zone-b-2', name: 'Étagère 2' }
+                    ]
+                },
+                {
+                    id: 'zone-c', name: 'Zone C', x: 490, y: 50, width: 200, height: 180,
+                    subZones: []
+                }
             ],
             backgroundImage: null,
             backgroundMode: 'contain',
             zoneTransparency: 40,
-            planWidth: 600,
-            planHeight: 400
+            planWidth: 750,
+            planHeight: 450
         };
         let editMode = false;
         let editingZoneId = null;
@@ -2256,6 +2529,9 @@
                 updateStats();
                 renderMap();
 
+                // Mettre à jour les notifications pour Cath's Eyes
+                updateCathsEyesNotifications();
+
                 // Update detail view if open
                 if (currentKittingId) {
                     const kitting = kittings.find(k => k.id === currentKittingId);
@@ -2302,6 +2578,8 @@
                     const docRef = await db.collection('kittings').add(kitting);
                     kitting.id = docRef.id;
                 }
+                // Mettre à jour les notifications Cath's Eyes
+                await updateCathsEyesNotifications();
                 return true;
             } catch (error) {
                 console.error("Erreur sauvegarde:", error);
@@ -2313,11 +2591,39 @@
         async function deleteKittingFromFirebase(kittingId) {
             try {
                 await db.collection('kittings').doc(kittingId).delete();
+                // Mettre à jour les notifications Cath's Eyes
+                await updateCathsEyesNotifications();
                 return true;
             } catch (error) {
                 console.error("Erreur suppression:", error);
                 showToast('Erreur de suppression');
                 return false;
+            }
+        }
+
+        // ============================================
+        // NOTIFICATIONS CATH'S EYES
+        // ============================================
+
+        // Met à jour les stats de notification dans Cath's Eyes Firebase
+        // pour que l'app principale affiche un badge sur le bouton Kitting
+        async function updateCathsEyesNotifications() {
+            try {
+                // Calculer les totaux
+                const totalKittings = kittings.length;
+                const totalPieces = kittings.reduce((sum, k) => sum + (k.pieces ? k.pieces.length : 0), 0);
+
+                // Écrire dans Cath's Eyes Firebase
+                await cathsEyesDb.collection('kittingNotifications').doc('stats').set({
+                    totalKittings: totalKittings,
+                    totalPieces: totalPieces,
+                    lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastKittingAdded: kittings.length > 0 ? kittings[0].ordre : null
+                });
+
+                console.log('Notifications Cath\'s Eyes mises à jour:', { totalKittings, totalPieces });
+            } catch (error) {
+                console.error('Erreur mise à jour notifications Cath\'s Eyes:', error);
             }
         }
 
@@ -2463,18 +2769,53 @@
 
             zoneConfig.zones.forEach(zone => {
                 const option = document.createElement('option');
-                option.value = zone.name;
+                option.value = zone.id;
                 option.textContent = zone.name;
+                option.dataset.hasSubzones = (zone.subZones && zone.subZones.length > 0) ? 'true' : 'false';
                 locationSelect.appendChild(option);
             });
 
+            // Reset sub-zone select
+            document.getElementById('subZoneGroup').style.display = 'none';
+            document.getElementById('newSubZone').innerHTML = '<option value="">-- Aucune (zone générale) --</option>';
+
             openModal('newKittingModal');
+        }
+
+        function updateSubZoneSelect() {
+            const locationSelect = document.getElementById('newLocation');
+            const subZoneGroup = document.getElementById('subZoneGroup');
+            const subZoneSelect = document.getElementById('newSubZone');
+            const selectedZoneId = locationSelect.value;
+
+            // Reset sub-zone select
+            subZoneSelect.innerHTML = '<option value="">-- Aucune (zone générale) --</option>';
+
+            if (!selectedZoneId) {
+                subZoneGroup.style.display = 'none';
+                return;
+            }
+
+            // Find the selected zone
+            const zone = zoneConfig.zones.find(z => z.id === selectedZoneId);
+            if (zone && zone.subZones && zone.subZones.length > 0) {
+                zone.subZones.forEach(sz => {
+                    const option = document.createElement('option');
+                    option.value = sz.id;
+                    option.textContent = sz.name;
+                    subZoneSelect.appendChild(option);
+                });
+                subZoneGroup.style.display = 'block';
+            } else {
+                subZoneGroup.style.display = 'none';
+            }
         }
 
         async function createKitting() {
             const ordre = document.getElementById('newOrdre').value.trim();
             const description = document.getElementById('newDescription').value.trim();
-            const location = document.getElementById('newLocation').value.trim();
+            const zoneId = document.getElementById('newLocation').value.trim();
+            const subZoneId = document.getElementById('newSubZone').value.trim();
             const piecesText = document.getElementById('newPieces').value.trim();
 
             if (!ordre) {
@@ -2482,9 +2823,22 @@
                 return;
             }
 
-            if (!location) {
-                showToast('La localisation est requise');
+            if (!zoneId) {
+                showToast('La zone de stockage est requise');
                 return;
+            }
+
+            // Build location string for display
+            const zone = zoneConfig.zones.find(z => z.id === zoneId);
+            let location = zone ? zone.name : zoneId;
+            let subZoneName = null;
+
+            if (subZoneId && zone && zone.subZones) {
+                const subZone = zone.subZones.find(sz => sz.id === subZoneId);
+                if (subZone) {
+                    subZoneName = subZone.name;
+                    location = `${zone.name} > ${subZone.name}`;
+                }
             }
 
             let pieces = [];
@@ -2537,6 +2891,8 @@
                 ordre,
                 description,
                 location,
+                zoneId: zoneId,
+                subZone: subZoneId || null,
                 pieces,
                 status,
                 createdAt: new Date().toISOString()
@@ -3087,10 +3443,13 @@
             pieceList.innerHTML = kitting.pieces.map(p => {
                 const qtyRequired = p.quantityRequired || 1;
                 const qtyReceived = p.quantityReceived || 0;
-                const isComplete = qtyReceived >= qtyRequired;
+                const isComplete = p.received || (qtyReceived >= qtyRequired);
 
                 return `
                 <li class="piece-item ${isComplete ? 'received' : ''}">
+                    <input type="checkbox" class="piece-checkbox"
+                           ${isComplete ? 'checked' : ''}
+                           onchange="togglePieceReceived('${kitting.id}', '${p.id}', this.checked)">
                     <span class="piece-name">${escapeHtml(p.name)}</span>
                     <div class="piece-quantity">
                         <span class="piece-quantity-display ${isComplete ? 'complete' : 'incomplete'}">
@@ -3104,8 +3463,7 @@
                                data-kitting-id="${kitting.id}"
                                onchange="updatePieceQuantity('${kitting.id}', '${p.id}', this.value)">
                     </div>
-                    ${isComplete ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#2e7d32"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' : ''}
-                    <button class="piece-remove" onclick="removePiece('${kitting.id}', '${p.id}')">
+                    <button class="piece-remove" onclick="removePiece('${kitting.id}', '${p.id}')" title="Supprimer">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
@@ -3136,6 +3494,31 @@
                 kitting.status = allReceived && kitting.pieces.length > 0 ? 'pret' : 'incomplet';
 
                 await saveKittingToFirebase(kitting);
+            }
+        }
+
+        // Fonction pour cocher/décocher une pièce via checkbox
+        async function togglePieceReceived(kittingId, pieceId, isChecked) {
+            const kitting = kittings.find(k => k.id === kittingId);
+            if (!kitting) return;
+
+            const piece = kitting.pieces.find(p => p.id === pieceId);
+            if (piece) {
+                piece.received = isChecked;
+
+                // Si coché manuellement, mettre la quantité reçue = quantité requise
+                if (isChecked) {
+                    piece.quantityReceived = piece.quantityRequired || 1;
+                } else {
+                    piece.quantityReceived = 0;
+                }
+
+                // Auto-update kitting status
+                const allReceived = kitting.pieces.every(p => p.received);
+                kitting.status = allReceived && kitting.pieces.length > 0 ? 'pret' : 'incomplet';
+
+                await saveKittingToFirebase(kitting);
+                showToast(isChecked ? 'Pièce reçue ✓' : 'Pièce non reçue');
             }
         }
 
@@ -3239,28 +3622,78 @@
 
             zoneConfig.zones.forEach(zone => {
                 const option = document.createElement('option');
-                option.value = zone.name;
+                option.value = zone.id;
                 option.textContent = zone.name;
-                if (zone.name === kitting.location) {
+                // Select current zone
+                if (kitting.zoneId === zone.id || kitting.location.toLowerCase().includes(zone.name.toLowerCase())) {
                     option.selected = true;
                 }
                 select.appendChild(option);
             });
 
+            // Update sub-zone select after populating zones
+            updateEditLocationSubZone();
+
+            // Pre-select current sub-zone if exists
+            if (kitting.subZone) {
+                document.getElementById('editLocationSubZone').value = kitting.subZone;
+            }
+
             openModal('editLocationModal');
         }
 
-        async function saveNewLocation() {
-            const newLocation = document.getElementById('editLocationSelect').value;
+        function updateEditLocationSubZone() {
+            const zoneSelect = document.getElementById('editLocationSelect');
+            const subZoneGroup = document.getElementById('editLocationSubZoneGroup');
+            const subZoneSelect = document.getElementById('editLocationSubZone');
+            const selectedZoneId = zoneSelect.value;
 
-            if (!newLocation) {
+            subZoneSelect.innerHTML = '<option value="">-- Aucune (zone générale) --</option>';
+
+            if (!selectedZoneId) {
+                subZoneGroup.style.display = 'none';
+                return;
+            }
+
+            const zone = zoneConfig.zones.find(z => z.id === selectedZoneId);
+            if (zone && zone.subZones && zone.subZones.length > 0) {
+                zone.subZones.forEach(sz => {
+                    const option = document.createElement('option');
+                    option.value = sz.id;
+                    option.textContent = sz.name;
+                    subZoneSelect.appendChild(option);
+                });
+                subZoneGroup.style.display = 'block';
+            } else {
+                subZoneGroup.style.display = 'none';
+            }
+        }
+
+        async function saveNewLocation() {
+            const zoneId = document.getElementById('editLocationSelect').value;
+            const subZoneId = document.getElementById('editLocationSubZone').value;
+
+            if (!zoneId) {
                 showToast('Veuillez sélectionner une zone');
                 return;
             }
 
             const kitting = kittings.find(k => k.id === currentKittingId);
             if (kitting) {
-                kitting.location = newLocation;
+                const zone = zoneConfig.zones.find(z => z.id === zoneId);
+                let location = zone ? zone.name : zoneId;
+
+                if (subZoneId && zone && zone.subZones) {
+                    const subZone = zone.subZones.find(sz => sz.id === subZoneId);
+                    if (subZone) {
+                        location = `${zone.name} > ${subZone.name}`;
+                    }
+                }
+
+                kitting.location = location;
+                kitting.zoneId = zoneId;
+                kitting.subZone = subZoneId || null;
+
                 await saveKittingToFirebase(kitting);
                 renderDetailView(kitting);
                 showToast('Localisation mise à jour');
@@ -3343,17 +3776,54 @@
             });
         }
 
+        // Temporary storage for sub-zones during modal editing
+        let tempNewSubZones = [];
+        let tempEditSubZones = [];
+
         function openZoneConfigModal() {
             document.getElementById('newZoneName').value = '';
-            document.getElementById('newZoneWidth').value = 150;
-            document.getElementById('newZoneHeight').value = 120;
+            document.getElementById('newZoneWidth').value = 200;
+            document.getElementById('newZoneHeight').value = 180;
+            document.getElementById('newSubZoneName').value = '';
+            tempNewSubZones = [];
+            renderNewSubZonesList();
             openModal('zoneConfigModal');
+        }
+
+        function addSubZoneToNew() {
+            const name = document.getElementById('newSubZoneName').value.trim();
+            if (!name) {
+                showToast('Entrez un nom pour la sous-zone');
+                return;
+            }
+            tempNewSubZones.push({ id: 'sz-' + Date.now(), name: name });
+            document.getElementById('newSubZoneName').value = '';
+            renderNewSubZonesList();
+        }
+
+        function removeNewSubZone(index) {
+            tempNewSubZones.splice(index, 1);
+            renderNewSubZonesList();
+        }
+
+        function renderNewSubZonesList() {
+            const container = document.getElementById('newSubZonesList');
+            if (tempNewSubZones.length === 0) {
+                container.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-light); font-style: italic;">Aucune sous-zone ajoutée</p>';
+                return;
+            }
+            container.innerHTML = tempNewSubZones.map((sz, i) => `
+                <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem; background: var(--bg); border-radius: 4px; margin-bottom: 0.25rem;">
+                    <span style="flex: 1;">${escapeHtml(sz.name)}</span>
+                    <button type="button" class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.8rem; color: var(--danger);" onclick="removeNewSubZone(${i})">×</button>
+                </div>
+            `).join('');
         }
 
         function addNewZone() {
             const name = document.getElementById('newZoneName').value.trim();
-            const width = parseInt(document.getElementById('newZoneWidth').value) || 150;
-            const height = parseInt(document.getElementById('newZoneHeight').value) || 120;
+            const width = parseInt(document.getElementById('newZoneWidth').value) || 200;
+            const height = parseInt(document.getElementById('newZoneHeight').value) || 180;
 
             if (!name) {
                 showToast('Veuillez entrer un nom pour la zone');
@@ -3366,14 +3836,15 @@
                 x: 200,
                 y: 150,
                 width: width,
-                height: height
+                height: height,
+                subZones: tempNewSubZones.map(sz => ({ id: sz.id, name: sz.name }))
             };
 
             zoneConfig.zones.push(newZone);
             saveZoneConfigToStorage();
             renderMap();
             closeModal('zoneConfigModal');
-            showToast('Zone ajoutée');
+            showToast('Zone ajoutée avec ' + tempNewSubZones.length + ' sous-zone(s)');
         }
 
         function openEditZoneModal(zoneId) {
@@ -3382,7 +3853,71 @@
 
             editingZoneId = zoneId;
             document.getElementById('editZoneName').value = zone.name;
+            document.getElementById('editZoneWidth').value = zone.width || 200;
+            document.getElementById('editZoneHeight').value = zone.height || 180;
+            document.getElementById('editSubZoneName').value = '';
+            tempEditSubZones = (zone.subZones || []).map(sz => ({ ...sz }));
+            renderEditSubZonesList();
             openModal('editZoneModal');
+        }
+
+        function addSubZoneToEdit() {
+            const name = document.getElementById('editSubZoneName').value.trim();
+            if (!name) {
+                showToast('Entrez un nom pour la sous-zone');
+                return;
+            }
+            tempEditSubZones.push({ id: 'sz-' + Date.now(), name: name });
+            document.getElementById('editSubZoneName').value = '';
+            renderEditSubZonesList();
+        }
+
+        function removeEditSubZone(index) {
+            tempEditSubZones.splice(index, 1);
+            renderEditSubZonesList();
+        }
+
+        function renderEditSubZonesList() {
+            const container = document.getElementById('editSubZonesList');
+            if (tempEditSubZones.length === 0) {
+                container.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-light); font-style: italic;">Aucune sous-zone</p>';
+                return;
+            }
+            container.innerHTML = tempEditSubZones.map((sz, i) => `
+                <div class="subzone-edit-item" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.35rem; border: 1px solid var(--border);">
+                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                        <button type="button" class="btn-arrow" onclick="moveSubZone(${i}, -1)" ${i === 0 ? 'disabled' : ''} title="Monter">▲</button>
+                        <button type="button" class="btn-arrow" onclick="moveSubZone(${i}, 1)" ${i === tempEditSubZones.length - 1 ? 'disabled' : ''} title="Descendre">▼</button>
+                    </div>
+                    <input type="text" class="form-input subzone-name-input" value="${escapeHtml(sz.name)}"
+                           onchange="renameSubZone(${i}, this.value)"
+                           style="flex: 1; padding: 0.4rem; font-size: 0.9rem;">
+                    <span class="subzone-kitting-count" style="font-size: 0.75rem; color: var(--text-light); min-width: 60px; text-align: center;">
+                        ${getSubZoneKittingCount(sz.id)} kitting(s)
+                    </span>
+                    <button type="button" class="btn btn-outline btn-sm" style="padding: 0.3rem 0.5rem; font-size: 0.85rem; color: var(--danger);" onclick="removeEditSubZone(${i})" title="Supprimer">×</button>
+                </div>
+            `).join('');
+        }
+
+        function renameSubZone(index, newName) {
+            if (newName.trim()) {
+                tempEditSubZones[index].name = newName.trim();
+            }
+        }
+
+        function moveSubZone(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= tempEditSubZones.length) return;
+
+            const temp = tempEditSubZones[index];
+            tempEditSubZones[index] = tempEditSubZones[newIndex];
+            tempEditSubZones[newIndex] = temp;
+            renderEditSubZonesList();
+        }
+
+        function getSubZoneKittingCount(subZoneId) {
+            return kittings.filter(k => k.subZoneId === subZoneId).length;
         }
 
         function saveEditedZone() {
@@ -3390,10 +3925,13 @@
             if (!zone) return;
 
             zone.name = document.getElementById('editZoneName').value.trim() || zone.name;
+            zone.width = parseInt(document.getElementById('editZoneWidth').value) || zone.width;
+            zone.height = parseInt(document.getElementById('editZoneHeight').value) || zone.height;
+            zone.subZones = tempEditSubZones.map(sz => ({ id: sz.id, name: sz.name }));
             saveZoneConfigToStorage();
             renderMap();
             closeModal('editZoneModal');
-            showToast('Zone modifiée');
+            showToast('Zone modifiée avec ' + zone.subZones.length + ' sous-zone(s)');
         }
 
         function deleteCurrentZone() {
@@ -3519,14 +4057,15 @@
             // Remove existing zones (keep building outline)
             container.querySelectorAll('.map-zone').forEach(el => el.remove());
 
-            // Get kittings grouped by zone
-            const kittingsByZone = groupKittingsByZone();
+            // Get kittings grouped by zone and sub-zone
+            const kittingsByLocation = groupKittingsByLocation();
 
             // Render each zone
             zoneConfig.zones.forEach(zone => {
-                const zoneKittings = kittingsByZone[zone.name.toLowerCase()] || [];
-                const hasPret = zoneKittings.some(k => k.status === 'pret');
-                const hasIncomplet = zoneKittings.some(k => k.status === 'incomplet');
+                const zoneData = kittingsByLocation[zone.id] || { direct: [], subZones: {} };
+                const allZoneKittings = getAllKittingsInZone(zoneData);
+                const hasPret = allZoneKittings.some(k => k.status === 'pret');
+                const hasIncomplet = allZoneKittings.some(k => k.status === 'incomplet');
 
                 let statusClass = '';
                 if (hasPret && hasIncomplet) statusClass = 'has-both';
@@ -3548,24 +4087,87 @@
                     zoneEl.ondblclick = () => openEditZoneModal(zone.id);
                 }
 
+                // Check if zone has sub-zones
+                const hasSubZones = zone.subZones && zone.subZones.length > 0;
+
+                let contentHtml = '';
+                if (hasSubZones) {
+                    // Render sub-zones as a grid
+                    contentHtml = `
+                        <div class="zone-subzones">
+                            ${zone.subZones.map(sz => {
+                                const szKittings = zoneData.subZones[sz.id] || [];
+                                const szHasPret = szKittings.some(k => k.status === 'pret');
+                                const szHasIncomplet = szKittings.some(k => k.status === 'incomplet');
+                                let szClass = '';
+                                if (szKittings.length > 0) {
+                                    szClass = szHasIncomplet ? 'has-incomplet' : (szHasPret ? 'has-pret' : 'has-kitting');
+                                }
+                                return `
+                                    <div class="sub-zone ${szClass}" title="${escapeHtml(sz.name)}">
+                                        <div class="sub-zone-title">${escapeHtml(sz.name)}</div>
+                                        <div class="sub-zone-content">
+                                            ${szKittings.length > 0 ?
+                                                szKittings.slice(0, 3).map(k => `
+                                                    <div class="sub-zone-kitting ${k.status}"
+                                                         onclick="event.stopPropagation(); openDetailView('${k.id}')"
+                                                         title="${escapeHtml(k.ordre)}">
+                                                        ${escapeHtml(k.ordre)}
+                                                    </div>
+                                                `).join('') + (szKittings.length > 3 ? `<div class="sub-zone-empty">+${szKittings.length - 3} autres</div>` : '') :
+                                                '<div class="sub-zone-empty">Vide</div>'
+                                            }
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        ${zoneData.direct.length > 0 ? `
+                            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border);">
+                                <div style="font-size: 0.7rem; color: var(--text-light); margin-bottom: 0.25rem;">Sans sous-zone:</div>
+                                ${zoneData.direct.map(k => `
+                                    <div class="map-kitting ${k.status}"
+                                         onclick="event.stopPropagation(); openDetailView('${k.id}')"
+                                         title="${escapeHtml(k.ordre)}">
+                                        <span class="status-dot"></span>
+                                        ${escapeHtml(k.ordre)}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    `;
+                } else {
+                    // No sub-zones - render kittings directly
+                    contentHtml = `
+                        <div class="zone-kittings">
+                            ${allZoneKittings.length > 0 ?
+                                allZoneKittings.map(k => `
+                                    <div class="map-kitting ${k.status}"
+                                         onclick="event.stopPropagation(); openDetailView('${k.id}')"
+                                         title="${escapeHtml(k.ordre)} - ${escapeHtml(k.location)}">
+                                        <span class="status-dot"></span>
+                                        ${escapeHtml(k.ordre)}
+                                    </div>
+                                `).join('') :
+                                '<div class="empty-zone-msg">Vide</div>'
+                            }
+                        </div>
+                    `;
+                }
+
                 zoneEl.innerHTML = `
                     <div class="zone-header">
                         <span class="zone-title">${escapeHtml(zone.name)}</span>
-                        <span class="zone-count">${zoneKittings.length}</span>
+                        <div style="display: flex; align-items: center; gap: 0.25rem;">
+                            <span class="zone-count">${allZoneKittings.length}</span>
+                            <button class="zone-edit-btn" onclick="event.stopPropagation(); openEditZoneModal('${zone.id}')" title="Modifier la zone">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    <div class="zone-kittings">
-                        ${zoneKittings.length > 0 ?
-                            zoneKittings.map(k => `
-                                <div class="map-kitting ${k.status}"
-                                     onclick="event.stopPropagation(); openDetailView('${k.id}')"
-                                     title="${escapeHtml(k.ordre)} - ${escapeHtml(k.location)}">
-                                    <span class="status-dot"></span>
-                                    ${escapeHtml(k.ordre)}
-                                </div>
-                            `).join('') :
-                            '<div class="empty-zone-msg">Vide</div>'
-                        }
-                    </div>
+                    ${contentHtml}
                     ${editMode ? `
                         <div class="zone-resize"
                              onmousedown="event.stopPropagation(); initDrag(event, '${zone.id}', 'resize')"
@@ -3594,49 +4196,69 @@
             applyZoneTransparency();
         }
 
-        function groupKittingsByZone() {
+        // Group kittings by zone and sub-zone
+        function groupKittingsByLocation() {
             const groups = {};
 
+            // Initialize groups for all zones
+            zoneConfig.zones.forEach(zone => {
+                groups[zone.id] = {
+                    direct: [],
+                    subZones: {}
+                };
+                if (zone.subZones) {
+                    zone.subZones.forEach(sz => {
+                        groups[zone.id].subZones[sz.id] = [];
+                    });
+                }
+            });
+
             kittings.forEach(k => {
-                const locationLower = k.location.toLowerCase();
+                // Location format: "Zone A" or "Zone A > Case 1"
+                const location = k.location || '';
+                const subZoneId = k.subZone || null;
 
                 // Find matching zone
                 let matchedZone = null;
                 for (const zone of zoneConfig.zones) {
-                    const zoneLower = zone.name.toLowerCase();
-                    // Check if location contains zone name or starts with it
-                    if (locationLower.includes(zoneLower) ||
-                        locationLower.startsWith(zoneLower.split(' ')[0]) ||
-                        locationLower.split(' ')[0] === zoneLower.split(' ')[0]) {
-                        matchedZone = zoneLower;
+                    if (k.zoneId === zone.id || location.toLowerCase().includes(zone.name.toLowerCase())) {
+                        matchedZone = zone;
                         break;
                     }
                 }
 
-                // Try to extract zone pattern (e.g., "Zone A - Étagère 3" -> "zone a")
-                if (!matchedZone) {
-                    const zoneMatch = locationLower.match(/zone\s*([a-z0-9]+)/i);
-                    if (zoneMatch) {
-                        const potentialZone = 'zone ' + zoneMatch[1].toLowerCase();
-                        if (zoneConfig.zones.some(z => z.name.toLowerCase() === potentialZone)) {
-                            matchedZone = potentialZone;
-                        }
-                    }
-                }
-
                 if (matchedZone) {
-                    if (!groups[matchedZone]) {
-                        groups[matchedZone] = [];
+                    if (subZoneId && groups[matchedZone.id].subZones[subZoneId] !== undefined) {
+                        groups[matchedZone.id].subZones[subZoneId].push(k);
+                    } else {
+                        groups[matchedZone.id].direct.push(k);
                     }
-                    groups[matchedZone].push(k);
                 }
             });
 
             return groups;
         }
 
+        // Get all kittings in a zone (including sub-zones)
+        function getAllKittingsInZone(zoneData) {
+            let all = [...zoneData.direct];
+            Object.values(zoneData.subZones).forEach(szKittings => {
+                all = all.concat(szKittings);
+            });
+            return all;
+        }
+
         function getLocationSuggestions() {
-            return zoneConfig.zones.map(z => z.name);
+            const suggestions = [];
+            zoneConfig.zones.forEach(zone => {
+                suggestions.push(zone.name);
+                if (zone.subZones) {
+                    zone.subZones.forEach(sz => {
+                        suggestions.push(`${zone.name} > ${sz.name}`);
+                    });
+                }
+            });
+            return suggestions;
         }
 
         // ============================================
