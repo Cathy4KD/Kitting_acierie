@@ -1604,6 +1604,24 @@
             opacity: 0.5;
         }
 
+        .breadcrumb-edit-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 6px;
+            padding: 0.35rem;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .breadcrumb-edit-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
         .tree-content {
             padding: 0.5rem;
             max-height: calc(100vh - 280px);
@@ -1628,6 +1646,37 @@
 
         .tree-item:active {
             transform: scale(0.98);
+        }
+
+        .tree-item-main {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tree-edit-btn {
+            background: var(--primary-light);
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem;
+            cursor: pointer;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .tree-edit-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tree-edit-btn:active {
+            transform: scale(0.95);
         }
 
         .tree-item.has-pret {
@@ -4401,20 +4450,27 @@
                         : `${allKittings.length} kitting${allKittings.length > 1 ? 's' : ''}`;
 
                     return `
-                        <div class="tree-item ${statusClass}" onclick="treeNavigateTo('subzones', '${zone.id}')">
-                            <div class="tree-item-icon zone">📍</div>
-                            <div class="tree-item-content">
-                                <div class="tree-item-title">${escapeHtml(zone.name)}</div>
-                                <div class="tree-item-subtitle">${subtitle}</div>
-                            </div>
-                            <div class="tree-item-badge">
-                                <div class="tree-item-status">
-                                    ${hasPret ? '<div class="tree-status-dot pret"></div>' : ''}
-                                    ${hasIncomplet ? '<div class="tree-status-dot incomplet"></div>' : ''}
+                        <div class="tree-item ${statusClass}">
+                            <div class="tree-item-main" onclick="treeNavigateTo('subzones', '${zone.id}')">
+                                <div class="tree-item-icon zone">📍</div>
+                                <div class="tree-item-content">
+                                    <div class="tree-item-title">${escapeHtml(zone.name)}</div>
+                                    <div class="tree-item-subtitle">${subtitle}</div>
                                 </div>
-                                <span class="tree-item-count">${allKittings.length}</span>
-                                <span class="tree-item-arrow">›</span>
+                                <div class="tree-item-badge">
+                                    <div class="tree-item-status">
+                                        ${hasPret ? '<div class="tree-status-dot pret"></div>' : ''}
+                                        ${hasIncomplet ? '<div class="tree-status-dot incomplet"></div>' : ''}
+                                    </div>
+                                    <span class="tree-item-count">${allKittings.length}</span>
+                                    <span class="tree-item-arrow">›</span>
+                                </div>
                             </div>
+                            <button class="tree-edit-btn" onclick="event.stopPropagation(); openEditZoneModal('${zone.id}')" title="Modifier la zone">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                </svg>
+                            </button>
                         </div>
                     `;
                 }).join('');
@@ -4432,6 +4488,11 @@
                     <span class="breadcrumb-item">Zones</span>
                     <span class="breadcrumb-separator">›</span>
                     <span class="breadcrumb-item active">${escapeHtml(zone.name)}</span>
+                    <button class="breadcrumb-edit-btn" onclick="event.stopPropagation(); openEditZoneModal('${zone.id}')" title="Modifier la zone">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                    </button>
                 `;
 
                 const zoneData = kittingsByLocation[zone.id] || { direct: [], subZones: {} };
