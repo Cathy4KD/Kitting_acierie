@@ -1521,6 +1521,288 @@
             border-bottom: 2px solid var(--text-light);
         }
 
+        /* Responsive classes */
+        .desktop-only {
+            display: block;
+        }
+        .mobile-only {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-only {
+                display: none !important;
+            }
+            .mobile-only {
+                display: block !important;
+            }
+            .map-toolbar {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .map-toolbar .zoom-controls {
+                display: none;
+            }
+            .map-toolbar .btn .btn-text {
+                display: none;
+            }
+        }
+
+        /* Tree View Styles */
+        .tree-view-container {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tree-nav-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .tree-back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .tree-back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .tree-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            opacity: 0.7;
+        }
+
+        .breadcrumb-item.active {
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        .breadcrumb-separator {
+            opacity: 0.5;
+        }
+
+        .tree-content {
+            padding: 0.5rem;
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+
+        .tree-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin: 0.35rem 0;
+            background: var(--bg);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .tree-item:hover {
+            background: var(--primary-light);
+        }
+
+        .tree-item:active {
+            transform: scale(0.98);
+        }
+
+        .tree-item.has-pret {
+            border-left: 4px solid var(--success);
+        }
+
+        .tree-item.has-incomplet {
+            border-left: 4px solid var(--warning);
+        }
+
+        .tree-item.has-both {
+            border-left: 4px solid;
+            border-image: linear-gradient(to bottom, var(--success) 50%, var(--warning) 50%) 1;
+        }
+
+        .tree-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .tree-item-icon.zone {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tree-item-icon.subzone {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .tree-item-icon.kitting {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .tree-item-icon.kitting.pret {
+            background: var(--success);
+        }
+
+        .tree-item-icon.kitting.incomplet {
+            background: var(--warning);
+        }
+
+        .tree-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tree-item-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+        }
+
+        .tree-item-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .tree-item-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tree-item-count {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tree-item-arrow {
+            color: var(--text-light);
+            margin-left: 0.5rem;
+        }
+
+        .tree-item-status {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        .tree-status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .tree-status-dot.pret {
+            background: var(--success);
+        }
+
+        .tree-status-dot.incomplet {
+            background: var(--warning);
+        }
+
+        .tree-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .tree-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Kitting item in tree view */
+        .tree-kitting-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin: 0.35rem 0;
+            background: var(--bg);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tree-kitting-item:hover {
+            background: var(--primary-light);
+        }
+
+        .tree-kitting-item.pret {
+            background: #e8f5e9;
+            border: 1px solid var(--success);
+        }
+
+        .tree-kitting-item.incomplet {
+            background: #fff3e0;
+            border: 1px solid var(--warning);
+        }
+
+        .tree-kitting-info {
+            flex: 1;
+        }
+
+        .tree-kitting-ordre {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .tree-kitting-pieces {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+        }
+
+        .tree-kitting-status {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tree-kitting-status.pret {
+            background: var(--success);
+            color: white;
+        }
+
+        .tree-kitting-status.incomplet {
+            background: var(--warning);
+            color: white;
+        }
+
         /* Zone Config Modal */
         .zone-config {
             display: grid;
@@ -1821,7 +2103,8 @@
                 </div>
             </div>
 
-            <div class="floor-plan-wrapper">
+            <!-- Vue Plan (Desktop) -->
+            <div class="floor-plan-wrapper desktop-only">
                 <div class="floor-plan" id="floorPlan">
                     <div class="floor-plan-inner" id="floorPlanInner">
                         <div class="building-outline">
@@ -1832,7 +2115,24 @@
                 </div>
             </div>
 
-            <div class="map-legend">
+            <!-- Vue Arborescente (Mobile) -->
+            <div class="tree-view-container mobile-only" id="treeViewContainer">
+                <div class="tree-nav-header" id="treeNavHeader">
+                    <button class="tree-back-btn" id="treeBackBtn" onclick="treeNavigateBack()" style="display: none;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                    </button>
+                    <div class="tree-breadcrumb" id="treeBreadcrumb">
+                        <span class="breadcrumb-item active">Zones</span>
+                    </div>
+                </div>
+                <div class="tree-content" id="treeContent">
+                    <!-- Contenu arborescent généré dynamiquement -->
+                </div>
+            </div>
+
+            <div class="map-legend desktop-only">
                 <div class="legend-item">
                     <div class="legend-dot pret"></div>
                     <span>Prêt</span>
@@ -4048,6 +4348,216 @@
         }
 
         // ============================================
+        // TREE VIEW (Mobile Navigation)
+        // ============================================
+
+        let treeNavState = {
+            level: 'zones', // 'zones', 'subzones', 'kittings'
+            currentZone: null,
+            currentSubZone: null
+        };
+
+        function renderTreeView() {
+            const container = document.getElementById('treeContent');
+            const breadcrumb = document.getElementById('treeBreadcrumb');
+            const backBtn = document.getElementById('treeBackBtn');
+
+            if (!container) return;
+
+            const kittingsByLocation = groupKittingsByLocation();
+
+            if (treeNavState.level === 'zones') {
+                // Niveau 1 : Liste des zones
+                backBtn.style.display = 'none';
+                breadcrumb.innerHTML = '<span class="breadcrumb-item active">Zones de stockage</span>';
+
+                if (zoneConfig.zones.length === 0) {
+                    container.innerHTML = `
+                        <div class="tree-empty">
+                            <div class="tree-empty-icon">📦</div>
+                            <p>Aucune zone configurée</p>
+                            <button class="btn btn-primary" onclick="openZoneConfigModal()" style="margin-top: 1rem;">
+                                + Ajouter une zone
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = zoneConfig.zones.map(zone => {
+                    const zoneData = kittingsByLocation[zone.id] || { direct: [], subZones: {} };
+                    const allKittings = getAllKittingsInZone(zoneData);
+                    const hasPret = allKittings.some(k => k.status === 'pret');
+                    const hasIncomplet = allKittings.some(k => k.status === 'incomplet');
+                    const subZoneCount = (zone.subZones || []).length;
+
+                    let statusClass = '';
+                    if (hasPret && hasIncomplet) statusClass = 'has-both';
+                    else if (hasPret) statusClass = 'has-pret';
+                    else if (hasIncomplet) statusClass = 'has-incomplet';
+
+                    const subtitle = subZoneCount > 0
+                        ? `${subZoneCount} sous-zone${subZoneCount > 1 ? 's' : ''} • ${allKittings.length} kitting${allKittings.length > 1 ? 's' : ''}`
+                        : `${allKittings.length} kitting${allKittings.length > 1 ? 's' : ''}`;
+
+                    return `
+                        <div class="tree-item ${statusClass}" onclick="treeNavigateTo('subzones', '${zone.id}')">
+                            <div class="tree-item-icon zone">📍</div>
+                            <div class="tree-item-content">
+                                <div class="tree-item-title">${escapeHtml(zone.name)}</div>
+                                <div class="tree-item-subtitle">${subtitle}</div>
+                            </div>
+                            <div class="tree-item-badge">
+                                <div class="tree-item-status">
+                                    ${hasPret ? '<div class="tree-status-dot pret"></div>' : ''}
+                                    ${hasIncomplet ? '<div class="tree-status-dot incomplet"></div>' : ''}
+                                </div>
+                                <span class="tree-item-count">${allKittings.length}</span>
+                                <span class="tree-item-arrow">›</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } else if (treeNavState.level === 'subzones') {
+                // Niveau 2 : Sous-zones d'une zone
+                const zone = zoneConfig.zones.find(z => z.id === treeNavState.currentZone);
+                if (!zone) {
+                    treeNavigateTo('zones');
+                    return;
+                }
+
+                backBtn.style.display = 'flex';
+                breadcrumb.innerHTML = `
+                    <span class="breadcrumb-item">Zones</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item active">${escapeHtml(zone.name)}</span>
+                `;
+
+                const zoneData = kittingsByLocation[zone.id] || { direct: [], subZones: {} };
+                let html = '';
+
+                // Afficher les sous-zones
+                if (zone.subZones && zone.subZones.length > 0) {
+                    html += zone.subZones.map(sz => {
+                        const szKittings = zoneData.subZones[sz.id] || [];
+                        const hasPret = szKittings.some(k => k.status === 'pret');
+                        const hasIncomplet = szKittings.some(k => k.status === 'incomplet');
+
+                        let statusClass = '';
+                        if (hasPret && hasIncomplet) statusClass = 'has-both';
+                        else if (hasPret) statusClass = 'has-pret';
+                        else if (hasIncomplet) statusClass = 'has-incomplet';
+
+                        return `
+                            <div class="tree-item ${statusClass}" onclick="treeNavigateTo('kittings', '${zone.id}', '${sz.id}')">
+                                <div class="tree-item-icon subzone">📦</div>
+                                <div class="tree-item-content">
+                                    <div class="tree-item-title">${escapeHtml(sz.name)}</div>
+                                    <div class="tree-item-subtitle">${szKittings.length} kitting${szKittings.length > 1 ? 's' : ''}</div>
+                                </div>
+                                <div class="tree-item-badge">
+                                    <div class="tree-item-status">
+                                        ${hasPret ? '<div class="tree-status-dot pret"></div>' : ''}
+                                        ${hasIncomplet ? '<div class="tree-status-dot incomplet"></div>' : ''}
+                                    </div>
+                                    <span class="tree-item-count">${szKittings.length}</span>
+                                    <span class="tree-item-arrow">›</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                // Afficher les kittings directs (sans sous-zone)
+                if (zoneData.direct.length > 0) {
+                    html += `<div style="margin: 1rem 0 0.5rem; font-size: 0.85rem; color: var(--text-light); padding-left: 0.5rem;">Sans sous-zone :</div>`;
+                    html += zoneData.direct.map(k => renderTreeKittingItem(k)).join('');
+                }
+
+                if (html === '') {
+                    html = `
+                        <div class="tree-empty">
+                            <div class="tree-empty-icon">📭</div>
+                            <p>Aucun contenu dans cette zone</p>
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+            } else if (treeNavState.level === 'kittings') {
+                // Niveau 3 : Kittings dans une sous-zone
+                const zone = zoneConfig.zones.find(z => z.id === treeNavState.currentZone);
+                const subZone = zone?.subZones?.find(sz => sz.id === treeNavState.currentSubZone);
+
+                if (!zone || !subZone) {
+                    treeNavigateTo('zones');
+                    return;
+                }
+
+                backBtn.style.display = 'flex';
+                breadcrumb.innerHTML = `
+                    <span class="breadcrumb-item">Zones</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">${escapeHtml(zone.name)}</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item active">${escapeHtml(subZone.name)}</span>
+                `;
+
+                const zoneData = kittingsByLocation[zone.id] || { direct: [], subZones: {} };
+                const szKittings = zoneData.subZones[subZone.id] || [];
+
+                if (szKittings.length === 0) {
+                    container.innerHTML = `
+                        <div class="tree-empty">
+                            <div class="tree-empty-icon">📭</div>
+                            <p>Aucun kitting dans ${escapeHtml(subZone.name)}</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = szKittings.map(k => renderTreeKittingItem(k)).join('');
+            }
+        }
+
+        function renderTreeKittingItem(k) {
+            const receivedCount = k.pieces.filter(p => p.received).length;
+            const totalPieces = k.pieces.length;
+
+            return `
+                <div class="tree-kitting-item ${k.status}" onclick="openDetailView('${k.id}')">
+                    <div class="tree-item-icon kitting ${k.status}">
+                        ${k.status === 'pret' ? '✓' : '⏳'}
+                    </div>
+                    <div class="tree-kitting-info">
+                        <div class="tree-kitting-ordre">${escapeHtml(k.ordre)}</div>
+                        <div class="tree-kitting-pieces">${receivedCount}/${totalPieces} pièces reçues</div>
+                    </div>
+                    <span class="tree-kitting-status ${k.status}">
+                        ${k.status === 'pret' ? 'Prêt' : 'Incomplet'}
+                    </span>
+                </div>
+            `;
+        }
+
+        function treeNavigateTo(level, zoneId = null, subZoneId = null) {
+            treeNavState.level = level;
+            treeNavState.currentZone = zoneId;
+            treeNavState.currentSubZone = subZoneId;
+            renderTreeView();
+        }
+
+        function treeNavigateBack() {
+            if (treeNavState.level === 'kittings') {
+                treeNavigateTo('subzones', treeNavState.currentZone);
+            } else if (treeNavState.level === 'subzones') {
+                treeNavigateTo('zones');
+            }
+        }
+
+        // ============================================
         // MAP RENDERING
         // ============================================
 
@@ -4194,6 +4704,9 @@
 
             // Appliquer la transparence des zones
             applyZoneTransparency();
+
+            // Aussi mettre à jour la vue arborescente mobile
+            renderTreeView();
         }
 
         // Group kittings by zone and sub-zone
