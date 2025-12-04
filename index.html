@@ -2045,6 +2045,13 @@
                     const data = doc.data();
                     piecesFromCathsEyes = data.pieces || [];
                     console.log('Pièces chargées depuis Cath\'s Eyes:', piecesFromCathsEyes.length);
+                    // Debug: afficher quelques exemples d'OT liés
+                    if (piecesFromCathsEyes.length > 0) {
+                        const otExemples = [...new Set(piecesFromCathsEyes.slice(0, 20).map(p => p.otLie))].filter(Boolean);
+                        console.log('Exemples d\'OT liés:', otExemples);
+                    }
+                } else {
+                    console.log('Aucune donnée trouvée dans Cath\'s Eyes Firebase');
                 }
             } catch (error) {
                 console.error('Erreur chargement pièces Cath\'s Eyes:', error);
@@ -2054,11 +2061,31 @@
         // Obtenir les pièces pour un OT spécifique
         function getPiecesForOT(otNumber) {
             if (!otNumber) return [];
-            const otLower = otNumber.toString().trim().toLowerCase();
-            return piecesFromCathsEyes.filter(p => {
-                const pieceOT = (p.otLie || '').toString().trim().toLowerCase();
-                return pieceOT === otLower || pieceOT.includes(otLower) || otLower.includes(pieceOT);
+
+            // Normaliser le numéro recherché (enlever espaces, tirets, mettre en minuscule)
+            const normalizeOT = (ot) => {
+                return (ot || '').toString().trim().toLowerCase()
+                    .replace(/[-_\s]/g, '')  // Enlever tirets, underscores, espaces
+                    .replace(/^0+/, '');      // Enlever les zéros au début
+            };
+
+            const searchOT = normalizeOT(otNumber);
+            console.log('Recherche OT:', otNumber, '-> normalisé:', searchOT);
+            console.log('Nombre de pièces disponibles:', piecesFromCathsEyes.length);
+
+            const results = piecesFromCathsEyes.filter(p => {
+                const pieceOT = normalizeOT(p.otLie);
+                // Correspondance exacte ou partielle
+                return pieceOT === searchOT ||
+                       pieceOT.includes(searchOT) ||
+                       searchOT.includes(pieceOT) ||
+                       // Essayer aussi avec le champ 'ot' si otLie est vide
+                       normalizeOT(p.ot) === searchOT ||
+                       normalizeOT(p.ot).includes(searchOT);
             });
+
+            console.log('Pièces trouvées:', results.length);
+            return results;
         }
 
         // Formater les pièces pour le kitting
