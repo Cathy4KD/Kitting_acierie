@@ -1654,8 +1654,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Pièces attendues (une par ligne)</label>
-                    <textarea class="form-input" id="newPieces" rows="4" placeholder="Pièce 1&#10;Pièce 2&#10;Pièce 3"></textarea>
+                    <label class="form-label">Pièces attendues</label>
+                    <div id="piecesListContainer" style="display: none; max-height: 200px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                        <div id="piecesList"></div>
+                    </div>
+                    <textarea class="form-input" id="newPieces" rows="4" placeholder="Ou saisir manuellement (une par ligne)"></textarea>
                     <div id="piecesCount" style="margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-light);"></div>
                 </div>
             </div>
@@ -2140,6 +2143,9 @@
             }
         }
 
+        // Variable pour stocker les pièces chargées
+        let loadedPiecesForKitting = [];
+
         // Charger les pièces pour l'OT entré
         function loadPiecesForOT() {
             const otNumber = document.getElementById('newOrdre').value.trim();
@@ -2154,10 +2160,30 @@
                 return;
             }
 
-            // Formater et remplir le textarea
-            const piecesText = formatPiecesForKitting(pieces);
-            document.getElementById('newPieces').value = piecesText;
-            document.getElementById('piecesCount').innerHTML = `<span style="color: var(--success);">${pieces.length} pièce(s) chargée(s) depuis Arrêt Annuel</span>`;
+            // Stocker les pièces chargées
+            loadedPiecesForKitting = pieces;
+
+            // Afficher la liste avec checkboxes
+            const container = document.getElementById('piecesListContainer');
+            const list = document.getElementById('piecesList');
+
+            list.innerHTML = pieces.map((p, index) => {
+                const ref = (p.reference || '').trim();
+                const designation = (p.designation || '').trim();
+                const displayName = ref && designation ? `${ref} - ${designation}` : (ref || designation || 'Pièce sans nom');
+
+                return `
+                    <div style="display: flex; align-items: center; padding: 8px; border-bottom: 1px solid var(--border); gap: 10px;">
+                        <input type="checkbox" id="pieceReceived_${index}" style="width: 20px; height: 20px; cursor: pointer;">
+                        <label for="pieceReceived_${index}" style="flex: 1; cursor: pointer;">${escapeHtml(displayName)}</label>
+                        <span style="color: var(--text-light); font-size: 0.85rem;">Reçue?</span>
+                    </div>
+                `;
+            }).join('');
+
+            container.style.display = 'block';
+            document.getElementById('newPieces').style.display = 'none';
+            document.getElementById('piecesCount').innerHTML = `<span style="color: var(--success);">${pieces.length} pièce(s) - Cochez celles déjà reçues</span>`;
 
             showToast(`${pieces.length} pièce(s) chargée(s)`);
         }
@@ -2370,6 +2396,14 @@
             document.getElementById('newDescription').value = '';
             document.getElementById('newPieces').value = '';
 
+            // Reset liste des pièces chargées
+            loadedPiecesForKitting = [];
+            document.getElementById('piecesListContainer').style.display = 'none';
+            document.getElementById('piecesList').innerHTML = '';
+            document.getElementById('newPieces').style.display = 'block';
+            document.getElementById('piecesCount').innerHTML = '';
+            document.getElementById('piecesBadge').style.display = 'none';
+
             // Remplir le menu déroulant avec les zones de stockage existantes
             const locationSelect = document.getElementById('newLocation');
             locationSelect.innerHTML = '<option value="">-- Sélectionner une zone --</option>';
@@ -2400,24 +2434,51 @@
                 return;
             }
 
-            const pieces = piecesText
-                .split('\n')
-                .map(p => p.trim())
-                .filter(p => p)
-                .map(name => ({ id: generateId(), name, received: false }));
+            let pieces = [];
+
+            // Si des pièces ont été chargées depuis Arrêt Annuel
+            if (loadedPiecesForKitting.length > 0) {
+                pieces = loadedPiecesForKitting.map((p, index) => {
+                    const ref = (p.reference || '').trim();
+                    const designation = (p.designation || '').trim();
+                    const name = ref && designation ? `${ref} - ${designation}` : (ref || designation || 'Pièce sans nom');
+
+                    // Vérifier si la checkbox est cochée
+                    const checkbox = document.getElementById(`pieceReceived_${index}`);
+                    const received = checkbox ? checkbox.checked : false;
+
+                    return { id: generateId(), name, received };
+                });
+            } else if (piecesText) {
+                // Sinon utiliser le textarea
+                pieces = piecesText
+                    .split('\n')
+                    .map(p => p.trim())
+                    .filter(p => p)
+                    .map(name => ({ id: generateId(), name, received: false }));
+            }
+
+            // Déterminer le statut
+            const allReceived = pieces.length > 0 && pieces.every(p => p.received);
+            const status = allReceived ? 'pret' : 'incomplet';
 
             const kitting = {
                 ordre,
                 description,
                 location,
                 pieces,
-                status: 'incomplet',
+                status,
                 createdAt: new Date().toISOString()
             };
 
             // Save to Firebase
             const success = await saveKittingToFirebase(kitting);
             if (success) {
+                // Reset
+                loadedPiecesForKitting = [];
+                document.getElementById('piecesListContainer').style.display = 'none';
+                document.getElementById('newPieces').style.display = 'block';
+
                 closeModal('newKittingModal');
                 showToast('Kitting créé avec succès');
             }
