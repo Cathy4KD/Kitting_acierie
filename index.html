@@ -2042,9 +2042,11 @@
 
         async function loadPiecesFromCathsEyes() {
             try {
-                const doc = await cathsEyesDb.collection('arretAnnuel').doc('mainData').get();
-                if (doc.exists) {
-                    const data = doc.data();
+                // Les pièces sont stockées dans un document séparé 'pieces'
+                const piecesDoc = await cathsEyesDb.collection('arretAnnuel').doc('pieces').get();
+
+                if (piecesDoc.exists) {
+                    const data = piecesDoc.data();
                     piecesFromCathsEyes = data.pieces || [];
                     console.log('Pièces chargées depuis Cath\'s Eyes:', piecesFromCathsEyes.length);
                     // Debug: afficher quelques exemples d'OT liés
@@ -2053,7 +2055,15 @@
                         console.log('Exemples d\'OT liés:', otExemples);
                     }
                 } else {
-                    console.log('Aucune donnée trouvée dans Cath\'s Eyes Firebase');
+                    // Fallback: essayer l'ancien format (mainData)
+                    const mainDoc = await cathsEyesDb.collection('arretAnnuel').doc('mainData').get();
+                    if (mainDoc.exists) {
+                        const data = mainDoc.data();
+                        piecesFromCathsEyes = data.pieces || [];
+                        console.log('Pièces chargées depuis mainData (ancien format):', piecesFromCathsEyes.length);
+                    } else {
+                        console.log('Aucune donnée trouvée dans Cath\'s Eyes Firebase');
+                    }
                 }
             } catch (error) {
                 console.error('Erreur chargement pièces Cath\'s Eyes:', error);
