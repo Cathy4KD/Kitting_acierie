@@ -549,6 +549,40 @@
             flex: 1;
         }
 
+        .piece-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .piece-quantity-input {
+            width: 60px;
+            padding: 0.35rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .piece-quantity-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .piece-quantity-display {
+            font-weight: 500;
+        }
+
+        .piece-quantity-display.complete {
+            color: var(--success);
+        }
+
+        .piece-quantity-display.incomplete {
+            color: var(--warning);
+        }
+
         .piece-remove {
             color: var(--danger);
             background: none;
@@ -1827,6 +1861,19 @@
                     <label class="form-label">Nom de la pièce</label>
                     <input type="text" class="form-input" id="manualPieceName" placeholder="Nom de la pièce">
                 </div>
+                <div class="form-group">
+                    <label class="form-label">Quantités</label>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.85rem; color: var(--text-light);">Requise</label>
+                            <input type="number" class="form-input" id="manualPieceQtyRequired" value="1" min="1" step="1">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.85rem; color: var(--text-light);">Reçue</label>
+                            <input type="number" class="form-input" id="manualPieceQtyReceived" value="0" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('addPieceModal')">Annuler</button>
@@ -2171,12 +2218,18 @@
                 const ref = (p.reference || '').trim();
                 const designation = (p.designation || '').trim();
                 const displayName = ref && designation ? `${ref} - ${designation}` : (ref || designation || 'Pièce sans nom');
+                const quantite = parseFloat(p.quantite) || 1;
 
                 return `
-                    <div style="display: flex; align-items: center; padding: 8px; border-bottom: 1px solid var(--border); gap: 10px;">
+                    <div style="display: flex; align-items: center; padding: 8px; border-bottom: 1px solid var(--border); gap: 10px; flex-wrap: wrap;">
                         <input type="checkbox" id="pieceReceived_${index}" style="width: 20px; height: 20px; cursor: pointer;">
-                        <label for="pieceReceived_${index}" style="flex: 1; cursor: pointer;">${escapeHtml(displayName)}</label>
-                        <span style="color: var(--text-light); font-size: 0.85rem;">Reçue?</span>
+                        <label for="pieceReceived_${index}" style="flex: 1; cursor: pointer; min-width: 150px;">${escapeHtml(displayName)}</label>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <span style="color: var(--text-light); font-size: 0.8rem;">Qté requise: <strong>${quantite}</strong></span>
+                            <span style="color: var(--text-light); font-size: 0.8rem; margin-left: 10px;">Reçue:</span>
+                            <input type="number" id="pieceQtyReceived_${index}" min="0" step="1" value="0"
+                                   style="width: 55px; padding: 4px; border: 1px solid var(--border); border-radius: 4px; text-align: center;">
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -2443,19 +2496,37 @@
                     const designation = (p.designation || '').trim();
                     const name = ref && designation ? `${ref} - ${designation}` : (ref || designation || 'Pièce sans nom');
 
-                    // Vérifier si la checkbox est cochée
-                    const checkbox = document.getElementById(`pieceReceived_${index}`);
-                    const received = checkbox ? checkbox.checked : false;
+                    // Quantité requise depuis Arret Annuel
+                    const quantityRequired = parseFloat(p.quantite) || 1;
 
-                    return { id: generateId(), name, received };
+                    // Quantité reçue saisie par l'utilisateur
+                    const qtyInput = document.getElementById(`pieceQtyReceived_${index}`);
+                    const quantityReceived = qtyInput ? parseFloat(qtyInput.value) || 0 : 0;
+
+                    // La pièce est reçue si quantité reçue >= quantité requise
+                    const received = quantityReceived >= quantityRequired;
+
+                    return {
+                        id: generateId(),
+                        name,
+                        received,
+                        quantityRequired,
+                        quantityReceived
+                    };
                 });
             } else if (piecesText) {
-                // Sinon utiliser le textarea
+                // Sinon utiliser le textarea (quantité par défaut = 1)
                 pieces = piecesText
                     .split('\n')
                     .map(p => p.trim())
                     .filter(p => p)
-                    .map(name => ({ id: generateId(), name, received: false }));
+                    .map(name => ({
+                        id: generateId(),
+                        name,
+                        received: false,
+                        quantityRequired: 1,
+                        quantityReceived: 0
+                    }));
             }
 
             // Déterminer le statut
@@ -2940,6 +3011,11 @@
                 return;
             }
 
+            // Extraire la quantité depuis les données OCR si disponible
+            const extractedQty = (window.lastExtractedData && window.lastExtractedData.quantite)
+                ? parseFloat(window.lastExtractedData.quantite) || 1
+                : 1;
+
             const kitting = kittings.find(k => k.id === kittingId);
             if (kitting) {
                 // Check if piece already exists
@@ -2948,22 +3024,25 @@
                 );
 
                 if (existingPiece) {
-                    existingPiece.received = true;
-                    showToast('Pièce marquée comme reçue');
+                    // Incrémenter la quantité reçue
+                    existingPiece.quantityReceived = (existingPiece.quantityReceived || 0) + extractedQty;
+                    const qtyRequired = existingPiece.quantityRequired || 1;
+                    existingPiece.received = existingPiece.quantityReceived >= qtyRequired;
+                    showToast(`Quantité mise à jour: ${existingPiece.quantityReceived}/${qtyRequired}`);
                 } else {
                     kitting.pieces.push({
                         id: generateId(),
                         name: pieceName,
-                        received: true
+                        received: true,
+                        quantityRequired: 1,
+                        quantityReceived: extractedQty
                     });
                     showToast('Pièce ajoutée au kitting');
                 }
 
                 // Update status if all pieces received
                 const allReceived = kitting.pieces.every(p => p.received);
-                if (allReceived && kitting.pieces.length > 0) {
-                    kitting.status = 'pret';
-                }
+                kitting.status = allReceived && kitting.pieces.length > 0 ? 'pret' : 'incomplet';
 
                 await saveKittingToFirebase(kitting);
             }
@@ -3005,20 +3084,34 @@
             }
 
             const pieceList = document.getElementById('detailPieceList');
-            pieceList.innerHTML = kitting.pieces.map(p => `
-                <li class="piece-item ${p.received ? 'received' : ''}">
-                    <input type="checkbox" class="piece-checkbox"
-                        ${p.received ? 'checked' : ''}
-                        onchange="togglePiece('${kitting.id}', '${p.id}')">
+            pieceList.innerHTML = kitting.pieces.map(p => {
+                const qtyRequired = p.quantityRequired || 1;
+                const qtyReceived = p.quantityReceived || 0;
+                const isComplete = qtyReceived >= qtyRequired;
+
+                return `
+                <li class="piece-item ${isComplete ? 'received' : ''}">
                     <span class="piece-name">${escapeHtml(p.name)}</span>
-                    ${p.received ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#2e7d32"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' : ''}
+                    <div class="piece-quantity">
+                        <span class="piece-quantity-display ${isComplete ? 'complete' : 'incomplete'}">
+                            ${qtyReceived}/${qtyRequired}
+                        </span>
+                        <input type="number" class="piece-quantity-input"
+                               value="${qtyReceived}"
+                               min="0"
+                               step="1"
+                               data-piece-id="${p.id}"
+                               data-kitting-id="${kitting.id}"
+                               onchange="updatePieceQuantity('${kitting.id}', '${p.id}', this.value)">
+                    </div>
+                    ${isComplete ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#2e7d32"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' : ''}
                     <button class="piece-remove" onclick="removePiece('${kitting.id}', '${p.id}')">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
                     </button>
                 </li>
-            `).join('');
+            `}).join('');
 
             if (kitting.pieces.length === 0) {
                 pieceList.innerHTML = '<li style="text-align: center; padding: 2rem; color: var(--text-light);">Aucune pièce dans ce kitting</li>';
@@ -3046,6 +3139,29 @@
             }
         }
 
+        // Fonction pour mettre à jour la quantité reçue d'une pièce
+        async function updatePieceQuantity(kittingId, pieceId, newQuantity) {
+            const kitting = kittings.find(k => k.id === kittingId);
+            if (!kitting) return;
+
+            const piece = kitting.pieces.find(p => p.id === pieceId);
+            if (piece) {
+                const qty = parseFloat(newQuantity) || 0;
+                piece.quantityReceived = qty;
+
+                // Mettre à jour le statut "received" basé sur la quantité
+                const qtyRequired = piece.quantityRequired || 1;
+                piece.received = qty >= qtyRequired;
+
+                // Auto-update kitting status
+                const allReceived = kitting.pieces.every(p => p.received);
+                kitting.status = allReceived && kitting.pieces.length > 0 ? 'pret' : 'incomplet';
+
+                await saveKittingToFirebase(kitting);
+                showToast(`Quantité mise à jour: ${qty}/${qtyRequired}`);
+            }
+        }
+
         async function removePiece(kittingId, pieceId) {
             const kitting = kittings.find(k => k.id === kittingId);
             if (!kitting) return;
@@ -3067,6 +3183,8 @@
 
         function openAddPieceManual() {
             document.getElementById('manualPieceName').value = '';
+            document.getElementById('manualPieceQtyRequired').value = '1';
+            document.getElementById('manualPieceQtyReceived').value = '0';
             openModal('addPieceModal');
         }
 
@@ -3077,13 +3195,23 @@
                 return;
             }
 
+            const quantityRequired = parseFloat(document.getElementById('manualPieceQtyRequired').value) || 1;
+            const quantityReceived = parseFloat(document.getElementById('manualPieceQtyReceived').value) || 0;
+            const received = quantityReceived >= quantityRequired;
+
             const kitting = kittings.find(k => k.id === currentKittingId);
             if (kitting) {
                 kitting.pieces.push({
                     id: generateId(),
                     name: pieceName,
-                    received: true
+                    received: received,
+                    quantityRequired: quantityRequired,
+                    quantityReceived: quantityReceived
                 });
+
+                // Auto-update kitting status
+                const allReceived = kitting.pieces.every(p => p.received);
+                kitting.status = allReceived && kitting.pieces.length > 0 ? 'pret' : 'incomplet';
 
                 await saveKittingToFirebase(kitting);
                 showToast('Pièce ajoutée');
