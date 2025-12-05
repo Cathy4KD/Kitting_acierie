@@ -125,6 +125,10 @@
             align-items: center;
         }
 
+        .slide-header.tutorial {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        }
+
         @media print {
             .slide-header {
                 margin: -40px -40px 30px -40px;
@@ -164,6 +168,14 @@
             border-left: 5px solid #1a237e;
         }
 
+        .feature-box.green {
+            border-left-color: #2e7d32;
+        }
+
+        .feature-box.orange {
+            border-left-color: #ff6f00;
+        }
+
         .feature-box h3 {
             color: #1a237e;
             margin-bottom: 15px;
@@ -171,6 +183,14 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .feature-box.green h3 {
+            color: #2e7d32;
+        }
+
+        .feature-box.orange h3 {
+            color: #ff6f00;
         }
 
         .feature-box ul {
@@ -191,6 +211,20 @@
             left: 0;
             color: #2e7d32;
             font-weight: bold;
+        }
+
+        .feature-box ol {
+            padding-left: 25px;
+        }
+
+        .feature-box ol li {
+            padding: 8px 0;
+            padding-left: 10px;
+            font-size: 1.05rem;
+        }
+
+        .feature-box ol li::before {
+            display: none;
         }
 
         .status-cards {
@@ -269,9 +303,17 @@
             transform: translateX(-50%);
         }
 
+        .flow-step.green .step-number {
+            background: #2e7d32;
+        }
+
         .flow-step h4 {
             color: #1a237e;
             margin: 10px 0 5px;
+        }
+
+        .flow-step.green h4 {
+            color: #2e7d32;
         }
 
         .flow-step p {
@@ -284,6 +326,10 @@
             color: #1a237e;
         }
 
+        .flow-arrow.green {
+            color: #2e7d32;
+        }
+
         .highlight-box {
             background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
             border-left: 5px solid #ff6f00;
@@ -292,9 +338,27 @@
             margin: 20px 0;
         }
 
+        .highlight-box.blue {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left-color: #1a237e;
+        }
+
+        .highlight-box.green {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #2e7d32;
+        }
+
         .highlight-box h4 {
             color: #e65100;
             margin-bottom: 10px;
+        }
+
+        .highlight-box.blue h4 {
+            color: #1a237e;
+        }
+
+        .highlight-box.green h4 {
+            color: #2e7d32;
         }
 
         .badge {
@@ -313,6 +377,11 @@
         .badge-warning {
             background: #fff3e0;
             color: #f57c00;
+        }
+
+        .badge-primary {
+            background: #e3f2fd;
+            color: #1a237e;
         }
 
         /* Screenshot styles */
@@ -335,10 +404,128 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
+        .screenshot.small {
+            max-height: 350px;
+        }
+
         @media print {
             .screenshot {
                 max-height: 400px;
             }
+        }
+
+        /* Step boxes for tutorial */
+        .step-box {
+            background: white;
+            border: 2px solid #2e7d32;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .step-box .step-num {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #2e7d32;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-box h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        .step-box p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .step-box .action {
+            background: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .step-box .action strong {
+            color: #2e7d32;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: #fff8e1;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .warning-box svg {
+            flex-shrink: 0;
+            fill: #f57c00;
+        }
+
+        .warning-box p {
+            margin: 0;
+            color: #e65100;
+        }
+
+        /* Info box */
+        .info-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .info-box svg {
+            flex-shrink: 0;
+            fill: #1976d2;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #1565c0;
+        }
+
+        /* Success box */
+        .success-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .success-box svg {
+            flex-shrink: 0;
+            fill: #2e7d32;
+        }
+
+        .success-box p {
+            margin: 0;
+            color: #2e7d32;
         }
 
         /* Slide fin */
@@ -385,6 +572,50 @@
             border-radius: 10px;
             font-weight: 600;
             color: white;
+        }
+
+        /* Table of contents */
+        .toc {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .toc-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 4px solid #1a237e;
+        }
+
+        .toc-item.tutorial {
+            border-left-color: #2e7d32;
+            background: #f1f8e9;
+        }
+
+        .toc-item .toc-num {
+            background: #1a237e;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .toc-item.tutorial .toc-num {
+            background: #2e7d32;
+        }
+
+        .toc-item span {
+            font-size: 1rem;
+            color: #333;
         }
 
         .print-btn {
@@ -437,6 +668,45 @@
         .back-btn:hover {
             background: #1a237e;
         }
+
+        /* Button illustration */
+        .btn-illustration {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ff5722;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-illustration.blue {
+            background: #1a237e;
+        }
+
+        .btn-illustration svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        /* Input illustration */
+        .input-illustration {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-family: monospace;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .input-illustration.filled {
+            border-color: #2e7d32;
+            background: #f1f8e9;
+        }
     </style>
 </head>
 <body>
@@ -461,8 +731,8 @@
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
         </svg>
     </div>
-    <h1>Aide - Suivi Kitting</h1>
-    <p class="subtitle">Guide d'utilisation de l'application</p>
+    <h1>Guide Complet</h1>
+    <p class="subtitle">Suivi Kitting Aciérie - Mode d'emploi</p>
     <div class="url">
         <a href="https://cathy4kd.github.io/Kitting_acierie/" target="_blank">
             https://cathy4kd.github.io/Kitting_acierie/
@@ -470,16 +740,80 @@
     </div>
 </div>
 
-<!-- SLIDE 2: Aperçu général -->
+<!-- SLIDE 2: Sommaire -->
+<div class="slide slide-content">
+    <div class="slide-header">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/>
+            </svg>
+            Sommaire
+        </h2>
+        <span class="slide-number">1 / 15</span>
+    </div>
+
+    <div class="toc">
+        <div class="toc-item">
+            <div class="toc-num">1</div>
+            <span>Présentation de l'application</span>
+        </div>
+        <div class="toc-item">
+            <div class="toc-num">2</div>
+            <span>Page Liste - Vue principale</span>
+        </div>
+        <div class="toc-item">
+            <div class="toc-num">3</div>
+            <span>Page Plan - Vue spatiale</span>
+        </div>
+        <div class="toc-item">
+            <div class="toc-num">4</div>
+            <span>Scanner d'étiquettes OCR</span>
+        </div>
+        <div class="toc-item tutorial">
+            <div class="toc-num">5</div>
+            <span><strong>TUTORIEL :</strong> Créer un kitting de zéro</span>
+        </div>
+        <div class="toc-item tutorial">
+            <div class="toc-num">6</div>
+            <span><strong>TUTORIEL :</strong> Remplir le formulaire</span>
+        </div>
+        <div class="toc-item tutorial">
+            <div class="toc-num">7</div>
+            <span><strong>TUTORIEL :</strong> Ajouter les pièces attendues</span>
+        </div>
+        <div class="toc-item tutorial">
+            <div class="toc-num">8</div>
+            <span><strong>TUTORIEL :</strong> Réceptionner les pièces</span>
+        </div>
+        <div class="toc-item tutorial">
+            <div class="toc-num">9</div>
+            <span><strong>TUTORIEL :</strong> Scanner une étiquette</span>
+        </div>
+        <div class="toc-item tutorial">
+            <div class="toc-num">10</div>
+            <span><strong>TUTORIEL :</strong> Gérer les zones de stockage</span>
+        </div>
+        <div class="toc-item">
+            <div class="toc-num">11</div>
+            <span>Navigation et raccourcis</span>
+        </div>
+        <div class="toc-item">
+            <div class="toc-num">12</div>
+            <span>Astuces et conseils</span>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 3: Aperçu général -->
 <div class="slide slide-content">
     <div class="slide-header">
         <h2>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
             </svg>
-            Qu'est-ce que l'application ?
+            Présentation de l'application
         </h2>
-        <span class="slide-number">1 / 8</span>
+        <span class="slide-number">2 / 15</span>
     </div>
 
     <div class="content-grid">
@@ -508,7 +842,7 @@
             <ul>
                 <li>Application web progressive (PWA)</li>
                 <li>Fonctionne sur mobile et desktop</li>
-                <li>Synchronisation en temps réel (Firebase)</li>
+                <li>Synchronisation en temps réel</li>
                 <li>Scanner d'étiquettes intégré (OCR)</li>
             </ul>
         </div>
@@ -521,7 +855,7 @@
         </div>
         <div class="status-card pret">
             <div class="number">X</div>
-            <div class="label">Prêts</div>
+            <div class="label">Prêts (complets)</div>
         </div>
         <div class="status-card incomplet">
             <div class="number">X</div>
@@ -530,7 +864,7 @@
     </div>
 </div>
 
-<!-- SLIDE 3: Page Liste -->
+<!-- SLIDE 4: Page Liste -->
 <div class="slide slide-content">
     <div class="slide-header">
         <h2>
@@ -539,7 +873,7 @@
             </svg>
             Page Liste - Vue principale
         </h2>
-        <span class="slide-number">2 / 8</span>
+        <span class="slide-number">3 / 15</span>
     </div>
 
     <div class="content-grid">
@@ -558,8 +892,8 @@
             <div class="highlight-box">
                 <h4>Code couleur</h4>
                 <p>
-                    <span class="badge badge-success">Vert</span> = Kit complet, prêt à utiliser<br>
-                    <span class="badge badge-warning">Orange</span> = Kit incomplet, pièces manquantes
+                    <span class="badge badge-success">Vert = PRÊT</span> Kit complet, toutes les pièces reçues<br><br>
+                    <span class="badge badge-warning">Orange = INCOMPLET</span> Pièces manquantes
                 </p>
             </div>
         </div>
@@ -570,50 +904,7 @@
     </div>
 </div>
 
-<!-- SLIDE 4: Détail d'un kitting -->
-<div class="slide slide-content">
-    <div class="slide-header">
-        <h2>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-            </svg>
-            Détail d'un Kitting
-        </h2>
-        <span class="slide-number">3 / 8</span>
-    </div>
-
-    <div class="content-grid">
-        <div class="screenshot-box">
-            <img src="screenshots/Vue détail.png" alt="Vue détail" class="screenshot">
-        </div>
-
-        <div>
-            <div class="feature-box">
-                <h3>Informations affichées</h3>
-                <ul>
-                    <li>Numéro d'ordre de travail (OT)</li>
-                    <li>Description du kitting</li>
-                    <li>Zone et emplacement de stockage</li>
-                    <li>Date de réception des pièces</li>
-                    <li>Liste des pièces avec quantités</li>
-                </ul>
-            </div>
-
-            <div class="feature-box" style="margin-top: 20px; border-left-color: #2e7d32;">
-                <h3 style="color: #2e7d32;">Actions disponibles</h3>
-                <ul>
-                    <li>Cocher les pièces reçues</li>
-                    <li>Modifier les quantités</li>
-                    <li>Changer la zone de stockage</li>
-                    <li>Supprimer un kitting</li>
-                    <li>Ajouter des pièces</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- SLIDE 5: Plan de stockage -->
+<!-- SLIDE 5: Page Plan -->
 <div class="slide slide-content">
     <div class="slide-header">
         <h2>
@@ -622,7 +913,7 @@
             </svg>
             Page Plan - Visualisation spatiale
         </h2>
-        <span class="slide-number">4 / 8</span>
+        <span class="slide-number">4 / 15</span>
     </div>
 
     <div class="content-grid">
@@ -638,8 +929,8 @@
                 </ul>
             </div>
 
-            <div class="feature-box" style="margin-top: 20px; border-left-color: #ff6f00;">
-                <h3 style="color: #ff6f00;">Vue Mobile (arborescente)</h3>
+            <div class="feature-box orange" style="margin-top: 20px;">
+                <h3>Vue Mobile (arborescente)</h3>
                 <ul>
                     <li>Navigation par zones</li>
                     <li>Liste des sous-zones</li>
@@ -661,9 +952,9 @@
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5zm-6 8h1.5v1.5H13V13zm1.5 1.5H16V16h-1.5v-1.5z"/>
             </svg>
-            Scanner d'étiquettes
+            Scanner d'étiquettes OCR
         </h2>
-        <span class="slide-number">5 / 8</span>
+        <span class="slide-number">5 / 15</span>
     </div>
 
     <div class="content-grid">
@@ -677,85 +968,461 @@
                 <ul>
                     <li>Utilisez la caméra du téléphone</li>
                     <li>Photographiez l'étiquette de la pièce</li>
-                    <li>L'OCR extrait automatiquement le numéro</li>
+                    <li>L'OCR extrait automatiquement les infos</li>
                     <li>Recherche automatique du kitting</li>
                 </ul>
             </div>
 
             <div class="highlight-box">
-                <h4>Astuce</h4>
-                <p>Pour de meilleurs résultats, assurez-vous que l'étiquette est bien éclairée et que le texte est lisible avant de prendre la photo.</p>
+                <h4>Astuce photo</h4>
+                <p>Pour de meilleurs résultats :</p>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>Bonne luminosité</li>
+                    <li>Texte bien cadré</li>
+                    <li>Étiquette propre et lisible</li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
 
-<!-- SLIDE 7: Créer un kitting -->
+<!-- ==================== TUTORIELS ==================== -->
+
+<!-- SLIDE 7: TUTORIEL - Créer un kitting - Introduction -->
 <div class="slide slide-content">
-    <div class="slide-header">
+    <div class="slide-header tutorial">
         <h2>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
             </svg>
-            Créer un nouveau Kitting
+            TUTORIEL : Créer un Kitting de zéro
         </h2>
-        <span class="slide-number">6 / 8</span>
+        <span class="slide-number">6 / 15</span>
+    </div>
+
+    <div class="highlight-box green">
+        <h4>Objectif de ce tutoriel</h4>
+        <p>Apprendre à créer un nouveau kitting étape par étape, de A à Z.</p>
     </div>
 
     <div class="flow-diagram">
-        <div class="flow-step">
+        <div class="flow-step green">
             <div class="step-number">1</div>
-            <h4>Numéro OT</h4>
-            <p>Saisir le numéro d'ordre de travail</p>
+            <h4>Ouvrir le formulaire</h4>
+            <p>Cliquer sur "+ Nouveau Kitting"</p>
         </div>
-        <span class="flow-arrow">→</span>
-        <div class="flow-step">
+        <span class="flow-arrow green">→</span>
+        <div class="flow-step green">
             <div class="step-number">2</div>
-            <h4>Zone</h4>
-            <p>Choisir la zone de stockage</p>
+            <h4>Saisir le N° OT</h4>
+            <p>Numéro d'ordre de travail</p>
         </div>
-        <span class="flow-arrow">→</span>
-        <div class="flow-step">
+        <span class="flow-arrow green">→</span>
+        <div class="flow-step green">
             <div class="step-number">3</div>
-            <h4>Pièces</h4>
-            <p>Ajouter les pièces attendues</p>
+            <h4>Choisir la zone</h4>
+            <p>Zone de stockage</p>
         </div>
-        <span class="flow-arrow">→</span>
-        <div class="flow-step">
+        <span class="flow-arrow green">→</span>
+        <div class="flow-step green">
             <div class="step-number">4</div>
-            <h4>Créer</h4>
-            <p>Valider la création</p>
+            <h4>Ajouter les pièces</h4>
+            <p>Liste des pièces attendues</p>
+        </div>
+        <span class="flow-arrow green">→</span>
+        <div class="flow-step green">
+            <div class="step-number">5</div>
+            <h4>Valider</h4>
+            <p>Créer le kitting</p>
         </div>
     </div>
 
-    <div class="content-grid" style="margin-top: 30px;">
-        <div class="screenshot-box">
-            <img src="screenshots/Nouveau kitting.png" alt="Nouveau kitting" class="screenshot">
+    <div class="content-grid" style="margin-top: 20px;">
+        <div class="info-box">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <p><strong>Prérequis :</strong> Avoir au moins une zone de stockage créée dans l'application (voir tutoriel "Gérer les zones").</p>
         </div>
 
-        <div class="feature-box">
-            <h3>Champs du formulaire</h3>
-            <ul>
-                <li><strong>Numéro d'Ordre (OT)</strong> - Obligatoire</li>
-                <li><strong>Description</strong> - Optionnel</li>
-                <li><strong>Zone de stockage</strong> - Obligatoire</li>
-                <li><strong>Case / Étagère</strong> - Optionnel</li>
-                <li><strong>Pièces attendues</strong> - Une par ligne</li>
-            </ul>
+        <div class="success-box">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+            <p><strong>Résultat :</strong> Un nouveau kitting apparaîtra dans la liste avec le statut "INCOMPLET" (aucune pièce reçue).</p>
         </div>
     </div>
 </div>
 
-<!-- SLIDE 8: Navigation -->
+<!-- SLIDE 8: TUTORIEL - Étape 1 : Ouvrir le formulaire -->
+<div class="slide slide-content">
+    <div class="slide-header tutorial">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            Étape 1 : Ouvrir le formulaire
+        </h2>
+        <span class="slide-number">7 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="step-box">
+                <div class="step-num">1</div>
+                <h4>Cliquez sur le bouton "+ Nouveau Kitting"</h4>
+                <p>Ce bouton se trouve dans l'en-tête de l'application, en haut à gauche.</p>
+                <div class="action">
+                    <strong>Bouton :</strong>
+                    <span class="btn-illustration" style="margin-left: 10px;">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Nouveau Kitting
+                    </span>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">2</div>
+                <h4>Une fenêtre modale s'ouvre</h4>
+                <p>Le formulaire de création apparaît avec tous les champs à remplir.</p>
+            </div>
+
+            <div class="warning-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                </svg>
+                <p>Les champs marqués d'un <strong>*</strong> sont obligatoires : Numéro d'Ordre et Zone de Stockage.</p>
+            </div>
+        </div>
+
+        <div class="screenshot-box">
+            <img src="screenshots/Nouveau kitting.png" alt="Nouveau kitting" class="screenshot">
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: TUTORIEL - Étape 2 : Remplir le formulaire -->
+<div class="slide slide-content">
+    <div class="slide-header tutorial">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+            Étape 2 : Remplir le formulaire
+        </h2>
+        <span class="slide-number">8 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="step-box">
+                <div class="step-num">A</div>
+                <h4>Numéro d'Ordre (OT) *</h4>
+                <p>Saisissez le numéro de l'ordre de travail. C'est l'identifiant unique du kitting.</p>
+                <div class="input-illustration filled">113703866</div>
+                <div class="action">
+                    <strong>Astuce :</strong> Cliquez sur le bouton orange pour générer automatiquement un numéro.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">B</div>
+                <h4>Description (optionnel)</h4>
+                <p>Ajoutez une description pour identifier facilement le kitting.</p>
+                <div class="input-illustration">Remplacement moteur ligne 3</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="step-box">
+                <div class="step-num">C</div>
+                <h4>Zone de Stockage *</h4>
+                <p>Sélectionnez la zone où sera stocké le kit.</p>
+                <div class="action">
+                    <strong>Menu déroulant :</strong> Choisissez parmi les zones existantes (Zone A, Zone B, etc.)
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">D</div>
+                <h4>Case / Étagère (optionnel)</h4>
+                <p>Si la zone a des sous-emplacements (A1, A2, B1...), sélectionnez la case précise.</p>
+            </div>
+
+            <div class="info-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <p>Les sous-zones apparaissent uniquement si vous les avez créées dans la page Plan.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 10: TUTORIEL - Étape 3 : Ajouter les pièces -->
+<div class="slide slide-content">
+    <div class="slide-header tutorial">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            </svg>
+            Étape 3 : Ajouter les pièces attendues
+        </h2>
+        <span class="slide-number">9 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="step-box">
+                <div class="step-num">1</div>
+                <h4>Zone "Pièces attendues"</h4>
+                <p>Dans le champ texte, saisissez les références des pièces que vous attendez pour ce kitting.</p>
+            </div>
+
+            <div class="feature-box green">
+                <h3>Format de saisie</h3>
+                <p style="margin-bottom: 15px;"><strong>Une pièce par ligne :</strong></p>
+                <div class="input-illustration filled" style="white-space: pre-line; line-height: 1.8;">
+20563113
+20563114
+20563115
+RONDELLE_M12
+BOULON_HEX_16</div>
+            </div>
+
+            <div class="highlight-box green">
+                <h4>Conseil</h4>
+                <p>Vous pouvez copier-coller directement une liste depuis Excel ou un fichier texte.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="step-box">
+                <div class="step-num">2</div>
+                <h4>Cliquez sur "Créer Kitting"</h4>
+                <p>Une fois tous les champs remplis, validez la création.</p>
+                <div class="action">
+                    <span class="btn-illustration" style="background: #ff5722;">
+                        Créer Kitting
+                    </span>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <div>
+                    <p><strong>Succès !</strong></p>
+                    <p>Le kitting est créé et apparaît dans la liste avec le statut <span class="badge badge-warning">INCOMPLET</span></p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <p>Vous pouvez toujours ajouter des pièces plus tard depuis le détail du kitting.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 11: TUTORIEL - Réceptionner les pièces -->
+<div class="slide slide-content">
+    <div class="slide-header tutorial">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+            Étape 4 : Réceptionner les pièces
+        </h2>
+        <span class="slide-number">10 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div class="screenshot-box">
+            <img src="screenshots/Vue détail.png" alt="Vue détail" class="screenshot">
+        </div>
+
+        <div>
+            <div class="step-box">
+                <div class="step-num">1</div>
+                <h4>Ouvrir le détail du kitting</h4>
+                <p>Cliquez sur la carte du kitting dans la liste pour voir ses détails.</p>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">2</div>
+                <h4>Cocher les pièces reçues</h4>
+                <p>Pour chaque pièce physiquement reçue, cochez la case correspondante.</p>
+                <div class="action">
+                    <strong>Action :</strong> Cliquez sur la case à cocher ☐ → ☑
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">3</div>
+                <h4>Modifier les quantités</h4>
+                <p>Si vous recevez plusieurs exemplaires, ajustez la quantité reçue.</p>
+            </div>
+
+            <div class="success-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <p>Quand <strong>toutes les pièces sont cochées</strong>, le statut passe automatiquement à <span class="badge badge-success">PRÊT</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 12: TUTORIEL - Scanner une étiquette -->
+<div class="slide slide-content">
+    <div class="slide-header tutorial">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5z"/>
+            </svg>
+            Utiliser le Scanner OCR
+        </h2>
+        <span class="slide-number">11 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="step-box">
+                <div class="step-num">1</div>
+                <h4>Ouvrir le scanner</h4>
+                <p>Cliquez sur "Scanner Étiquette" dans l'en-tête ou sur le bouton flottant orange (mobile).</p>
+                <div class="action">
+                    <span class="btn-illustration blue">
+                        <svg viewBox="0 0 24 24"><path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5z"/></svg>
+                        Scanner Étiquette
+                    </span>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">2</div>
+                <h4>Prendre une photo</h4>
+                <p>Visez l'étiquette de la pièce et appuyez sur "Reprendre" pour capturer l'image.</p>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">3</div>
+                <h4>Vérifier les données extraites</h4>
+                <p>L'application extrait automatiquement :</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Numéro d'article</li>
+                    <li>Poste technique</li>
+                    <li>Quantité</li>
+                    <li>Date</li>
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <div class="step-box">
+                <div class="step-num">4</div>
+                <h4>Recherche automatique</h4>
+                <p>L'application recherche le kitting correspondant et vous propose de cocher la pièce comme reçue.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Données reconnues par le scanner</h4>
+                <p>L'OCR peut lire :</p>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li><strong>Article :</strong> 20563113</li>
+                    <li><strong>Poste technique :</strong> 6500ASHL4400A</li>
+                    <li><strong>Quantité :</strong> 24.000 CHA</li>
+                    <li><strong>Date :</strong> 02/17/2025</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <p>Si l'OCR ne reconnaît pas bien le texte, vous pouvez saisir manuellement le numéro.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 13: TUTORIEL - Gérer les zones -->
+<div class="slide slide-content">
+    <div class="slide-header tutorial">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5z"/>
+            </svg>
+            Gérer les zones de stockage
+        </h2>
+        <span class="slide-number">12 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="step-box">
+                <div class="step-num">1</div>
+                <h4>Aller sur la page Plan</h4>
+                <p>Cliquez sur "Plan" dans la barre de navigation en bas de l'écran.</p>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">2</div>
+                <h4>Créer une nouvelle zone</h4>
+                <p>Cliquez sur "+ Zone" en haut à droite pour ajouter une zone de stockage.</p>
+                <div class="action">
+                    <span class="btn-illustration blue">
+                        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        Zone
+                    </span>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">3</div>
+                <h4>Nommer et positionner</h4>
+                <p>Donnez un nom à la zone (ex: "Zone A") et positionnez-la sur le plan en la glissant.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="step-box">
+                <div class="step-num">4</div>
+                <h4>Ajouter des sous-zones</h4>
+                <p>Cliquez sur l'icône ✏️ d'une zone puis "Ajouter sous-zone" pour créer des cases (A1, A2, etc.).</p>
+            </div>
+
+            <div class="feature-box green">
+                <h3>Types de zones</h3>
+                <ul>
+                    <li><strong>Zone principale</strong> - Grande zone de stockage</li>
+                    <li><strong>Sous-zone</strong> - Cases, étagères à l'intérieur</li>
+                    <li><strong>Conteneur</strong> - Zone avec plusieurs niveaux</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box blue">
+                <h4>Mode Édition</h4>
+                <p>Cliquez sur "Éditer" pour activer le mode édition et pouvoir déplacer/redimensionner les zones.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 14: Navigation -->
 <div class="slide slide-content">
     <div class="slide-header">
         <h2>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
             </svg>
-            Navigation dans l'application
+            Navigation et raccourcis
         </h2>
-        <span class="slide-number">7 / 8</span>
+        <span class="slide-number">13 / 15</span>
     </div>
 
     <div class="content-grid">
@@ -768,8 +1435,8 @@
             </ul>
         </div>
 
-        <div class="feature-box" style="border-left-color: #ff6f00;">
-            <h3 style="color: #ff6f00;">Boutons d'action (en-tête)</h3>
+        <div class="feature-box orange">
+            <h3>Boutons d'action (en-tête)</h3>
             <ul>
                 <li><strong>+ Nouveau Kitting</strong> - Créer un nouveau kit</li>
                 <li><strong>Scanner Étiquette</strong> - Ouvrir le scanner</li>
@@ -780,13 +1447,87 @@
 
     <div class="highlight-box" style="margin-top: 30px;">
         <h4>Bouton flottant (FAB)</h4>
-        <p>Sur mobile, un bouton orange en bas à droite permet d'accéder rapidement au scanner d'étiquettes.</p>
+        <p>Sur mobile, un bouton orange en bas à droite permet d'accéder rapidement au scanner d'étiquettes. C'est le raccourci le plus pratique pour scanner rapidement une pièce !</p>
+    </div>
+
+    <div class="status-cards" style="margin-top: 30px;">
+        <div class="status-card" style="border-top: 4px solid #2196f3;">
+            <div class="number" style="color: #2196f3; font-size: 1.5rem;">🔍</div>
+            <div class="label">Recherche</div>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">Tapez un N° OT ou référence pièce</p>
+        </div>
+        <div class="status-card" style="border-top: 4px solid #9c27b0;">
+            <div class="number" style="color: #9c27b0; font-size: 1.5rem;">📱</div>
+            <div class="label">PWA</div>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">Installez l'app sur votre téléphone</p>
+        </div>
+        <div class="status-card" style="border-top: 4px solid #ff5722;">
+            <div class="number" style="color: #ff5722; font-size: 1.5rem;">🔄</div>
+            <div class="label">Synchro</div>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">Données synchronisées en temps réel</p>
+        </div>
     </div>
 </div>
 
-<!-- SLIDE 9: Fin -->
+<!-- SLIDE 15: Astuces -->
+<div class="slide slide-content">
+    <div class="slide-header">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
+            </svg>
+            Astuces et conseils
+        </h2>
+        <span class="slide-number">14 / 15</span>
+    </div>
+
+    <div class="content-grid">
+        <div>
+            <div class="feature-box green">
+                <h3>Bonnes pratiques</h3>
+                <ul>
+                    <li>Créez les zones <strong>avant</strong> les kittings</li>
+                    <li>Utilisez des noms de zone clairs (Zone A, B, C...)</li>
+                    <li>Scannez les pièces dès réception</li>
+                    <li>Vérifiez les quantités reçues</li>
+                    <li>Consultez régulièrement les kittings incomplets</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                </svg>
+                <p><strong>Attention :</strong> La suppression d'un kitting est définitive. Vérifiez bien avant de supprimer.</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="feature-box">
+                <h3>Filtres utiles</h3>
+                <ul>
+                    <li><strong>Tous</strong> - Voir tous les kittings</li>
+                    <li><strong>Prêts</strong> - Kits complets à utiliser</li>
+                    <li><strong>Incomplets</strong> - Pièces manquantes à suivre</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box blue">
+                <h4>Installation PWA</h4>
+                <p>Sur mobile, ajoutez l'application à l'écran d'accueil pour un accès rapide :</p>
+                <ol style="margin-top: 10px; padding-left: 20px;">
+                    <li>Ouvrez le menu du navigateur (⋮)</li>
+                    <li>Sélectionnez "Ajouter à l'écran d'accueil"</li>
+                    <li>L'app sera accessible comme une application native</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 16: Fin -->
 <div class="slide slide-end">
-    <h2>Besoin d'aide ?</h2>
+    <h2>Vous êtes prêt !</h2>
     <p style="font-size: 1.3rem; opacity: 0.9; margin-bottom: 30px;">
         Application Suivi Kitting - Aciérie
     </p>
@@ -794,8 +1535,7 @@
     <div class="contact-info">
         <p><strong>Accès à l'application :</strong></p>
         <p><a href="https://cathy4kd.github.io/Kitting_acierie/" target="_blank">https://cathy4kd.github.io/Kitting_acierie/</a></p>
-        <p style="margin-top: 20px;"><strong>Code source (GitHub) :</strong></p>
-        <p><a href="https://github.com/cathy4kd/Kitting_acierie" target="_blank">https://github.com/cathy4kd/Kitting_acierie</a></p>
+        <p style="margin-top: 20px;"><strong>Cette aide est toujours accessible via le bouton "Aide"</strong></p>
     </div>
 
     <div class="tech-stack">
