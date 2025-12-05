@@ -3,350 +3,808 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aide - Suivi Kitting Aciérie</title>
+    <title>Aide - Application Suivi Kitting Aciérie</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+            .slide {
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            .slide:last-child {
+                page-break-after: avoid;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #1a1a2e;
             color: #333;
             line-height: 1.6;
         }
 
-        .header {
+        .slide {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            min-height: 100vh;
+            margin: 0 auto 20px;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media print {
+            .slide {
+                min-height: 100vh;
+                margin: 0;
+                box-shadow: none;
+                padding: 40px;
+            }
+        }
+
+        /* Slide de titre */
+        .slide-title {
             background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
             color: white;
-            padding: 30px 20px;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
-        .header h1 { font-size: 1.8rem; margin-bottom: 5px; }
-        .header p { opacity: 0.9; }
-
-        .back-btn {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .back-btn:hover { background: rgba(255,255,255,0.3); }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
+        .slide-title h1 {
+            font-size: 3.5rem;
             margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .section h2 {
-            color: #1a237e;
-            margin-bottom: 15px;
+        .slide-title .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .slide-title .logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.3rem;
+            justify-content: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        .section h2 svg {
-            width: 28px;
-            height: 28px;
+        .slide-title .logo svg {
+            width: 80px;
+            height: 80px;
             fill: #1a237e;
         }
 
-        .section p { margin-bottom: 15px; color: #555; }
-
-        .screenshot {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            margin: 15px auto;
-            display: block;
+        .slide-title .url {
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.15);
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin-top: 20px;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+        .slide-title .url a {
+            color: white;
+            text-decoration: none;
         }
 
-        .feature {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #1a237e;
+        /* Slide de contenu */
+        .slide-content {
+            background: white;
         }
 
-        .feature h4 {
-            color: #1a237e;
-            margin-bottom: 5px;
-        }
-
-        .feature p {
-            font-size: 0.9rem;
-            margin: 0;
-            color: #666;
-        }
-
-        .steps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .step {
-            background: #e3f2fd;
-            padding: 12px 20px;
-            border-radius: 25px;
+        .slide-header {
+            background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+            color: white;
+            padding: 25px 40px;
+            margin: -60px -60px 40px -60px;
+            border-radius: 0;
             display: flex;
             align-items: center;
-            gap: 8px;
         }
 
-        .step-num {
+        @media print {
+            .slide-header {
+                margin: -40px -40px 30px -40px;
+            }
+        }
+
+        .slide-header h2 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slide-header .slide-number {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+        }
+
+        .content-single {
+            flex: 1;
+        }
+
+        .feature-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #1a237e;
+        }
+
+        .feature-box h3 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .feature-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .status-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .status-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-card.total {
+            border-top: 4px solid #1a237e;
+        }
+
+        .status-card.pret {
+            border-top: 4px solid #2e7d32;
+        }
+
+        .status-card.incomplet {
+            border-top: 4px solid #f57c00;
+        }
+
+        .status-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .status-card.total .number { color: #1a237e; }
+        .status-card.pret .number { color: #2e7d32; }
+        .status-card.incomplet .number { color: #f57c00; }
+
+        .status-card .label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flow-step {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-radius: 12px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+
+        .flow-step .step-number {
             background: #1a237e;
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.85rem;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        .tip {
+        .flow-step h4 {
+            color: #1a237e;
+            margin: 10px 0 5px;
+        }
+
+        .flow-step p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: #1a237e;
+        }
+
+        .highlight-box {
             background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            border-left: 4px solid #ff6f00;
-            padding: 15px;
-            border-radius: 0 10px 10px 0;
-            margin: 15px 0;
+            border-left: 5px solid #ff6f00;
+            padding: 25px;
+            border-radius: 0 15px 15px 0;
+            margin: 20px 0;
         }
 
-        .tip h4 {
+        .highlight-box h4 {
             color: #e65100;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .badge {
             display: inline-block;
-            padding: 3px 10px;
-            border-radius: 15px;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
         }
 
-        .badge-success { background: #e8f5e9; color: #2e7d32; }
-        .badge-warning { background: #fff3e0; color: #f57c00; }
+        .badge-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
 
-        .toc {
-            background: #e8eaf6;
-            padding: 20px;
+        .badge-warning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        /* Screenshot styles */
+        .screenshot-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .screenshot {
+            max-width: 100%;
+            max-height: 450px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            object-fit: contain;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
-        .toc h3 {
-            color: #1a237e;
-            margin-bottom: 10px;
+        @media print {
+            .screenshot {
+                max-height: 400px;
+            }
         }
 
-        .toc ul {
-            list-style: none;
-            padding: 0;
+        /* Slide fin */
+        .slide-end {
+            background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
 
-        .toc li {
-            padding: 5px 0;
+        .slide-end h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
         }
 
-        .toc a {
-            color: #1a237e;
+        .slide-end .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 30px 50px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .slide-end .contact-info p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .slide-end .contact-info a {
+            color: #90caf9;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .tech-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(26, 35, 126, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            background: #534bae;
+        }
+
+        .print-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #534bae;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(26, 35, 126, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
             text-decoration: none;
         }
 
-        .toc a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.4rem; }
-            .back-btn { position: static; margin-bottom: 10px; transform: none; }
-            .section { padding: 15px; }
+        .back-btn:hover {
+            background: #1a237e;
         }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <a href="../index.html" class="back-btn">← Retour</a>
+<!-- Bouton Retour -->
+<a href="../index.html" class="back-btn no-print">
+    ← Retour à l'application
+</a>
+
+<!-- Bouton Imprimer -->
+<button class="print-btn no-print" onclick="window.print()">
+    <svg viewBox="0 0 24 24">
+        <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+    </svg>
+    Imprimer en PDF
+</button>
+
+<!-- SLIDE 1: Titre -->
+<div class="slide slide-title">
+    <div class="logo">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
+        </svg>
+    </div>
     <h1>Aide - Suivi Kitting</h1>
-    <p>Guide d'utilisation de l'application</p>
+    <p class="subtitle">Guide d'utilisation de l'application</p>
+    <div class="url">
+        <a href="https://cathy4kd.github.io/Kitting_acierie/" target="_blank">
+            https://cathy4kd.github.io/Kitting_acierie/
+        </a>
+    </div>
 </div>
 
-<div class="container">
-
-    <div class="toc">
-        <h3>Sommaire</h3>
-        <ul>
-            <li><a href="#liste">1. Page Liste</a></li>
-            <li><a href="#detail">2. Détail d'un Kitting</a></li>
-            <li><a href="#plan">3. Plan de Stockage</a></li>
-            <li><a href="#scanner">4. Scanner d'étiquettes</a></li>
-            <li><a href="#creer">5. Créer un Kitting</a></li>
-        </ul>
+<!-- SLIDE 2: Aperçu général -->
+<div class="slide slide-content">
+    <div class="slide-header">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            Qu'est-ce que l'application ?
+        </h2>
+        <span class="slide-number">1 / 8</span>
     </div>
 
-    <section id="liste" class="section">
+    <div class="content-grid">
+        <div class="feature-box">
+            <h3>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#1a237e">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+                Objectif
+            </h3>
+            <ul>
+                <li>Suivre les kits de pièces pour l'aciérie</li>
+                <li>Gérer les ordres de travail (OT)</li>
+                <li>Visualiser l'état des pièces reçues</li>
+                <li>Localiser les kits sur un plan de stockage</li>
+            </ul>
+        </div>
+
+        <div class="feature-box">
+            <h3>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#1a237e">
+                    <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/>
+                </svg>
+                Caractéristiques
+            </h3>
+            <ul>
+                <li>Application web progressive (PWA)</li>
+                <li>Fonctionne sur mobile et desktop</li>
+                <li>Synchronisation en temps réel (Firebase)</li>
+                <li>Scanner d'étiquettes intégré (OCR)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="status-cards">
+        <div class="status-card total">
+            <div class="number">X</div>
+            <div class="label">Total Kittings</div>
+        </div>
+        <div class="status-card pret">
+            <div class="number">X</div>
+            <div class="label">Prêts</div>
+        </div>
+        <div class="status-card incomplet">
+            <div class="number">X</div>
+            <div class="label">Incomplets</div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 3: Page Liste -->
+<div class="slide slide-content">
+    <div class="slide-header">
         <h2>
-            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-            Page Liste
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+            </svg>
+            Page Liste - Vue principale
         </h2>
-        <p>La page principale affiche tous vos kittings avec leur statut.</p>
+        <span class="slide-number">2 / 8</span>
+    </div>
 
-        <img src="screenshots/Page Liste.png" alt="Page Liste" class="screenshot">
+    <div class="content-grid">
+        <div>
+            <div class="feature-box">
+                <h3>Fonctionnalités</h3>
+                <ul>
+                    <li>Affichage de tous les kittings</li>
+                    <li>Filtrage par statut (Tous / Prêts / Incomplets)</li>
+                    <li>Recherche par numéro d'ordre ou pièce</li>
+                    <li>Statistiques en temps réel</li>
+                    <li>Cartes colorées selon le statut</li>
+                </ul>
+            </div>
 
-        <div class="features">
-            <div class="feature">
-                <h4>Recherche</h4>
-                <p>Recherchez par numéro d'ordre ou par pièce</p>
-            </div>
-            <div class="feature">
-                <h4>Filtres</h4>
-                <p>Filtrez par statut : Tous, Prêts, Incomplets</p>
-            </div>
-            <div class="feature">
-                <h4>Statistiques</h4>
-                <p>Voyez le nombre total de kittings en temps réel</p>
+            <div class="highlight-box">
+                <h4>Code couleur</h4>
+                <p>
+                    <span class="badge badge-success">Vert</span> = Kit complet, prêt à utiliser<br>
+                    <span class="badge badge-warning">Orange</span> = Kit incomplet, pièces manquantes
+                </p>
             </div>
         </div>
 
-        <div class="tip">
-            <h4>Code couleur</h4>
-            <p>
-                <span class="badge badge-success">Vert</span> = Kit complet, prêt à utiliser<br>
-                <span class="badge badge-warning">Orange</span> = Kit incomplet, pièces manquantes
-            </p>
+        <div class="screenshot-box">
+            <img src="screenshots/Page Liste.png" alt="Page Liste" class="screenshot">
         </div>
-    </section>
+    </div>
+</div>
 
-    <section id="detail" class="section">
+<!-- SLIDE 4: Détail d'un kitting -->
+<div class="slide slide-content">
+    <div class="slide-header">
         <h2>
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+            </svg>
             Détail d'un Kitting
         </h2>
-        <p>Cliquez sur un kitting pour voir ses détails et gérer ses pièces.</p>
+        <span class="slide-number">3 / 8</span>
+    </div>
 
-        <img src="screenshots/Vue détail.png" alt="Vue détail" class="screenshot">
+    <div class="content-grid">
+        <div class="screenshot-box">
+            <img src="screenshots/Vue détail.png" alt="Vue détail" class="screenshot">
+        </div>
 
-        <div class="features">
-            <div class="feature">
-                <h4>Informations</h4>
-                <p>N° d'ordre, description, zone, date de réception</p>
+        <div>
+            <div class="feature-box">
+                <h3>Informations affichées</h3>
+                <ul>
+                    <li>Numéro d'ordre de travail (OT)</li>
+                    <li>Description du kitting</li>
+                    <li>Zone et emplacement de stockage</li>
+                    <li>Date de réception des pièces</li>
+                    <li>Liste des pièces avec quantités</li>
+                </ul>
             </div>
-            <div class="feature">
-                <h4>Liste des pièces</h4>
-                <p>Cochez les pièces reçues, modifiez les quantités</p>
-            </div>
-            <div class="feature">
-                <h4>Actions</h4>
-                <p>Modifier la zone, marquer comme prêt, supprimer</p>
+
+            <div class="feature-box" style="margin-top: 20px; border-left-color: #2e7d32;">
+                <h3 style="color: #2e7d32;">Actions disponibles</h3>
+                <ul>
+                    <li>Cocher les pièces reçues</li>
+                    <li>Modifier les quantités</li>
+                    <li>Changer la zone de stockage</li>
+                    <li>Supprimer un kitting</li>
+                    <li>Ajouter des pièces</li>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <section id="plan" class="section">
+<!-- SLIDE 5: Plan de stockage -->
+<div class="slide slide-content">
+    <div class="slide-header">
         <h2>
-            <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-            Plan de Stockage
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+            </svg>
+            Page Plan - Visualisation spatiale
         </h2>
-        <p>Visualisez l'emplacement de vos kittings sur un plan interactif.</p>
+        <span class="slide-number">4 / 8</span>
+    </div>
 
-        <img src="screenshots/Page Plan.png" alt="Page Plan" class="screenshot">
+    <div class="content-grid">
+        <div>
+            <div class="feature-box">
+                <h3>Vue Plan (Desktop)</h3>
+                <ul>
+                    <li>Plan 2D interactif de la zone de stockage</li>
+                    <li>Zones déplaçables et redimensionnables</li>
+                    <li>Sous-zones (étagères, cases)</li>
+                    <li>Zoom avant/arrière</li>
+                    <li>Image de fond personnalisable</li>
+                </ul>
+            </div>
 
-        <div class="features">
-            <div class="feature">
-                <h4>Zones</h4>
-                <p>Créez et organisez vos zones de stockage</p>
-            </div>
-            <div class="feature">
-                <h4>Sous-zones</h4>
-                <p>Ajoutez des étagères, cases, emplacements</p>
-            </div>
-            <div class="feature">
-                <h4>Interaction</h4>
-                <p>Déplacez, redimensionnez, zoomez</p>
+            <div class="feature-box" style="margin-top: 20px; border-left-color: #ff6f00;">
+                <h3 style="color: #ff6f00;">Vue Mobile (arborescente)</h3>
+                <ul>
+                    <li>Navigation par zones</li>
+                    <li>Liste des sous-zones</li>
+                    <li>Accès rapide aux kittings</li>
+                </ul>
             </div>
         </div>
-    </section>
 
-    <section id="scanner" class="section">
+        <div class="screenshot-box">
+            <img src="screenshots/Page Plan.png" alt="Page Plan" class="screenshot">
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 6: Scanner -->
+<div class="slide slide-content">
+    <div class="slide-header">
         <h2>
-            <svg viewBox="0 0 24 24"><path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5z"/></svg>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5zm-6 8h1.5v1.5H13V13zm1.5 1.5H16V16h-1.5v-1.5z"/>
+            </svg>
             Scanner d'étiquettes
         </h2>
-        <p>Utilisez la caméra pour scanner les étiquettes des pièces.</p>
+        <span class="slide-number">5 / 8</span>
+    </div>
 
-        <img src="screenshots/Modal Scanner.png.jpg" alt="Scanner" class="screenshot">
-
-        <div class="steps">
-            <div class="step"><span class="step-num">1</span> Cliquez sur "Scanner"</div>
-            <div class="step"><span class="step-num">2</span> Autorisez la caméra</div>
-            <div class="step"><span class="step-num">3</span> Photographiez l'étiquette</div>
-            <div class="step"><span class="step-num">4</span> Le numéro est extrait automatiquement</div>
+    <div class="content-grid">
+        <div class="screenshot-box">
+            <img src="screenshots/Modal Scanner.png.jpg" alt="Modal Scanner" class="screenshot">
         </div>
 
-        <div class="tip">
-            <h4>Astuce</h4>
-            <p>Pour de meilleurs résultats, assurez-vous que l'étiquette est bien éclairée et que le texte est lisible.</p>
-        </div>
-    </section>
+        <div>
+            <div class="feature-box">
+                <h3>Comment ça marche ?</h3>
+                <ul>
+                    <li>Utilisez la caméra du téléphone</li>
+                    <li>Photographiez l'étiquette de la pièce</li>
+                    <li>L'OCR extrait automatiquement le numéro</li>
+                    <li>Recherche automatique du kitting</li>
+                </ul>
+            </div>
 
-    <section id="creer" class="section">
+            <div class="highlight-box">
+                <h4>Astuce</h4>
+                <p>Pour de meilleurs résultats, assurez-vous que l'étiquette est bien éclairée et que le texte est lisible avant de prendre la photo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: Créer un kitting -->
+<div class="slide slide-content">
+    <div class="slide-header">
         <h2>
-            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            Créer un Kitting
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            Créer un nouveau Kitting
         </h2>
-        <p>Ajoutez un nouveau kit de pièces à suivre.</p>
+        <span class="slide-number">6 / 8</span>
+    </div>
 
-        <img src="screenshots/Nouveau kitting.png" alt="Nouveau kitting" class="screenshot">
+    <div class="flow-diagram">
+        <div class="flow-step">
+            <div class="step-number">1</div>
+            <h4>Numéro OT</h4>
+            <p>Saisir le numéro d'ordre de travail</p>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">
+            <div class="step-number">2</div>
+            <h4>Zone</h4>
+            <p>Choisir la zone de stockage</p>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">
+            <div class="step-number">3</div>
+            <h4>Pièces</h4>
+            <p>Ajouter les pièces attendues</p>
+        </div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">
+            <div class="step-number">4</div>
+            <h4>Créer</h4>
+            <p>Valider la création</p>
+        </div>
+    </div>
 
-        <div class="steps">
-            <div class="step"><span class="step-num">1</span> Numéro d'OT</div>
-            <div class="step"><span class="step-num">2</span> Description (optionnel)</div>
-            <div class="step"><span class="step-num">3</span> Zone de stockage</div>
-            <div class="step"><span class="step-num">4</span> Liste des pièces</div>
+    <div class="content-grid" style="margin-top: 30px;">
+        <div class="screenshot-box">
+            <img src="screenshots/Nouveau kitting.png" alt="Nouveau kitting" class="screenshot">
         </div>
 
-        <div class="tip">
-            <h4>Format des pièces</h4>
-            <p>Entrez une pièce par ligne. Vous pouvez aussi scanner les étiquettes pour ajouter automatiquement les numéros.</p>
+        <div class="feature-box">
+            <h3>Champs du formulaire</h3>
+            <ul>
+                <li><strong>Numéro d'Ordre (OT)</strong> - Obligatoire</li>
+                <li><strong>Description</strong> - Optionnel</li>
+                <li><strong>Zone de stockage</strong> - Obligatoire</li>
+                <li><strong>Case / Étagère</strong> - Optionnel</li>
+                <li><strong>Pièces attendues</strong> - Une par ligne</li>
+            </ul>
         </div>
-    </section>
+    </div>
+</div>
 
+<!-- SLIDE 8: Navigation -->
+<div class="slide slide-content">
+    <div class="slide-header">
+        <h2>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+            </svg>
+            Navigation dans l'application
+        </h2>
+        <span class="slide-number">7 / 8</span>
+    </div>
+
+    <div class="content-grid">
+        <div class="feature-box">
+            <h3>Barre de navigation (en bas)</h3>
+            <ul>
+                <li><strong>Liste</strong> - Vue principale des kittings</li>
+                <li><strong>Plan</strong> - Visualisation spatiale des zones</li>
+                <li><strong>Scanner</strong> - Lecture d'étiquettes OCR</li>
+            </ul>
+        </div>
+
+        <div class="feature-box" style="border-left-color: #ff6f00;">
+            <h3 style="color: #ff6f00;">Boutons d'action (en-tête)</h3>
+            <ul>
+                <li><strong>+ Nouveau Kitting</strong> - Créer un nouveau kit</li>
+                <li><strong>Scanner Étiquette</strong> - Ouvrir le scanner</li>
+                <li><strong>Aide</strong> - Accéder à cette page</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 30px;">
+        <h4>Bouton flottant (FAB)</h4>
+        <p>Sur mobile, un bouton orange en bas à droite permet d'accéder rapidement au scanner d'étiquettes.</p>
+    </div>
+</div>
+
+<!-- SLIDE 9: Fin -->
+<div class="slide slide-end">
+    <h2>Besoin d'aide ?</h2>
+    <p style="font-size: 1.3rem; opacity: 0.9; margin-bottom: 30px;">
+        Application Suivi Kitting - Aciérie
+    </p>
+
+    <div class="contact-info">
+        <p><strong>Accès à l'application :</strong></p>
+        <p><a href="https://cathy4kd.github.io/Kitting_acierie/" target="_blank">https://cathy4kd.github.io/Kitting_acierie/</a></p>
+        <p style="margin-top: 20px;"><strong>Code source (GitHub) :</strong></p>
+        <p><a href="https://github.com/cathy4kd/Kitting_acierie" target="_blank">https://github.com/cathy4kd/Kitting_acierie</a></p>
+    </div>
+
+    <div class="tech-stack">
+        <div class="tech-item">HTML5</div>
+        <div class="tech-item">CSS3</div>
+        <div class="tech-item">JavaScript</div>
+        <div class="tech-item">Firebase</div>
+        <div class="tech-item">PWA</div>
+    </div>
 </div>
 
 </body>
