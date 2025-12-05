@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aide - Suivi Kitting Aciérie</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a237e 0%, #534bae 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 { font-size: 1.8rem; margin-bottom: 5px; }
+        .header p { opacity: 0.9; }
+
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+
+        .section h2 svg {
+            width: 28px;
+            height: 28px;
+            fill: #1a237e;
+        }
+
+        .section p { margin-bottom: 15px; color: #555; }
+
+        .screenshot {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            margin: 15px auto;
+            display: block;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feature {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #1a237e;
+        }
+
+        .feature h4 {
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            margin: 0;
+            color: #666;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .step {
+            background: #e3f2fd;
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-num {
+            background: #1a237e;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .tip {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #ff6f00;
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+            margin: 15px 0;
+        }
+
+        .tip h4 {
+            color: #e65100;
+            margin-bottom: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #e8f5e9; color: #2e7d32; }
+        .badge-warning { background: #fff3e0; color: #f57c00; }
+
+        .toc {
+            background: #e8eaf6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toc h3 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 5px 0;
+        }
+
+        .toc a {
+            color: #1a237e;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.4rem; }
+            .back-btn { position: static; margin-bottom: 10px; transform: none; }
+            .section { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <a href="../index.html" class="back-btn">← Retour</a>
+    <h1>Aide - Suivi Kitting</h1>
+    <p>Guide d'utilisation de l'application</p>
+</div>
+
+<div class="container">
+
+    <div class="toc">
+        <h3>Sommaire</h3>
+        <ul>
+            <li><a href="#liste">1. Page Liste</a></li>
+            <li><a href="#detail">2. Détail d'un Kitting</a></li>
+            <li><a href="#plan">3. Plan de Stockage</a></li>
+            <li><a href="#scanner">4. Scanner d'étiquettes</a></li>
+            <li><a href="#creer">5. Créer un Kitting</a></li>
+        </ul>
+    </div>
+
+    <section id="liste" class="section">
+        <h2>
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            Page Liste
+        </h2>
+        <p>La page principale affiche tous vos kittings avec leur statut.</p>
+
+        <img src="screenshots/Page Liste.png" alt="Page Liste" class="screenshot">
+
+        <div class="features">
+            <div class="feature">
+                <h4>Recherche</h4>
+                <p>Recherchez par numéro d'ordre ou par pièce</p>
+            </div>
+            <div class="feature">
+                <h4>Filtres</h4>
+                <p>Filtrez par statut : Tous, Prêts, Incomplets</p>
+            </div>
+            <div class="feature">
+                <h4>Statistiques</h4>
+                <p>Voyez le nombre total de kittings en temps réel</p>
+            </div>
+        </div>
+
+        <div class="tip">
+            <h4>Code couleur</h4>
+            <p>
+                <span class="badge badge-success">Vert</span> = Kit complet, prêt à utiliser<br>
+                <span class="badge badge-warning">Orange</span> = Kit incomplet, pièces manquantes
+            </p>
+        </div>
+    </section>
+
+    <section id="detail" class="section">
+        <h2>
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+            Détail d'un Kitting
+        </h2>
+        <p>Cliquez sur un kitting pour voir ses détails et gérer ses pièces.</p>
+
+        <img src="screenshots/Vue détail.png" alt="Vue détail" class="screenshot">
+
+        <div class="features">
+            <div class="feature">
+                <h4>Informations</h4>
+                <p>N° d'ordre, description, zone, date de réception</p>
+            </div>
+            <div class="feature">
+                <h4>Liste des pièces</h4>
+                <p>Cochez les pièces reçues, modifiez les quantités</p>
+            </div>
+            <div class="feature">
+                <h4>Actions</h4>
+                <p>Modifier la zone, marquer comme prêt, supprimer</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="plan" class="section">
+        <h2>
+            <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+            Plan de Stockage
+        </h2>
+        <p>Visualisez l'emplacement de vos kittings sur un plan interactif.</p>
+
+        <img src="screenshots/Page Plan.png" alt="Page Plan" class="screenshot">
+
+        <div class="features">
+            <div class="feature">
+                <h4>Zones</h4>
+                <p>Créez et organisez vos zones de stockage</p>
+            </div>
+            <div class="feature">
+                <h4>Sous-zones</h4>
+                <p>Ajoutez des étagères, cases, emplacements</p>
+            </div>
+            <div class="feature">
+                <h4>Interaction</h4>
+                <p>Déplacez, redimensionnez, zoomez</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="scanner" class="section">
+        <h2>
+            <svg viewBox="0 0 24 24"><path d="M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5z"/></svg>
+            Scanner d'étiquettes
+        </h2>
+        <p>Utilisez la caméra pour scanner les étiquettes des pièces.</p>
+
+        <img src="screenshots/Modal Scanner.png.jpg" alt="Scanner" class="screenshot">
+
+        <div class="steps">
+            <div class="step"><span class="step-num">1</span> Cliquez sur "Scanner"</div>
+            <div class="step"><span class="step-num">2</span> Autorisez la caméra</div>
+            <div class="step"><span class="step-num">3</span> Photographiez l'étiquette</div>
+            <div class="step"><span class="step-num">4</span> Le numéro est extrait automatiquement</div>
+        </div>
+
+        <div class="tip">
+            <h4>Astuce</h4>
+            <p>Pour de meilleurs résultats, assurez-vous que l'étiquette est bien éclairée et que le texte est lisible.</p>
+        </div>
+    </section>
+
+    <section id="creer" class="section">
+        <h2>
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Créer un Kitting
+        </h2>
+        <p>Ajoutez un nouveau kit de pièces à suivre.</p>
+
+        <img src="screenshots/Nouveau kitting.png" alt="Nouveau kitting" class="screenshot">
+
+        <div class="steps">
+            <div class="step"><span class="step-num">1</span> Numéro d'OT</div>
+            <div class="step"><span class="step-num">2</span> Description (optionnel)</div>
+            <div class="step"><span class="step-num">3</span> Zone de stockage</div>
+            <div class="step"><span class="step-num">4</span> Liste des pièces</div>
+        </div>
+
+        <div class="tip">
+            <h4>Format des pièces</h4>
+            <p>Entrez une pièce par ligne. Vous pouvez aussi scanner les étiquettes pour ajouter automatiquement les numéros.</p>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
