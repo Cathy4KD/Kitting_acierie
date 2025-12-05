@@ -601,6 +601,41 @@
             color: var(--warning);
         }
 
+        .piece-quantity-display.overstock {
+            color: #9c27b0;
+            font-weight: 700;
+        }
+
+        .piece-item.overstock {
+            border-left: 4px solid #9c27b0;
+            background: linear-gradient(90deg, rgba(156, 39, 176, 0.08) 0%, transparent 100%);
+        }
+
+        .overstock-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #9c27b0;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        .btn-help {
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important;
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 188, 212, 0.4);
+        }
+
+        .btn-help:hover {
+            background: linear-gradient(135deg, #0097a7 0%, #00838f 100%) !important;
+            box-shadow: 0 4px 12px rgba(0, 188, 212, 0.5);
+        }
+
         .piece-remove {
             color: var(--danger);
             background: none;
@@ -2038,7 +2073,7 @@
                 </svg>
                 Scanner Étiquette
             </button>
-            <a href="docs/aide.html" class="btn" style="background: rgba(255,255,255,0.2);">
+            <a href="docs/aide.html" class="btn btn-help">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
                 </svg>
@@ -3798,8 +3833,19 @@
             document.getElementById('detailDate').textContent = formatDateShort(kitting.createdAt);
 
             const receivedCount = kitting.pieces.filter(p => p.received).length;
+            const overstockCount = kitting.pieces.filter(p => (p.quantityReceived || 0) > (p.quantityRequired || 1)).length;
             document.getElementById('detailPiecesCount').textContent = receivedCount;
             document.getElementById('detailTotalPieces').textContent = kitting.pieces.length;
+
+            // Afficher indicateur overstock si présent
+            const piecesHeader = document.querySelector('.pieces-section h3');
+            if (piecesHeader) {
+                if (overstockCount > 0) {
+                    piecesHeader.innerHTML = `Pièces (<span id="detailPiecesCount">${receivedCount}</span>/<span id="detailTotalPieces">${kitting.pieces.length}</span>) <span class="overstock-badge">${overstockCount} surplus</span>`;
+                } else {
+                    piecesHeader.innerHTML = `Pièces (<span id="detailPiecesCount">${receivedCount}</span>/<span id="detailTotalPieces">${kitting.pieces.length}</span>)`;
+                }
+            }
 
             const markReadyBtn = document.getElementById('markReadyBtn');
             if (kitting.status === 'pret') {
@@ -3817,19 +3863,40 @@
                 const qtyRequired = p.quantityRequired || 1;
                 const qtyReceived = p.quantityReceived || 0;
                 const isComplete = p.received || (qtyReceived >= qtyRequired);
+                const isOverstock = qtyReceived > qtyRequired;
+                const overstockQty = isOverstock ? qtyReceived - qtyRequired : 0;
                 const receivedDate = p.receivedAt ? formatDateShort(p.receivedAt) : null;
 
+                // Déterminer la classe CSS pour l'item
+                let itemClass = 'piece-item';
+                if (isOverstock) {
+                    itemClass += ' overstock received';
+                } else if (isComplete) {
+                    itemClass += ' received';
+                }
+
+                // Déterminer la classe pour l'affichage de quantité
+                let qtyClass = 'piece-quantity-display';
+                if (isOverstock) {
+                    qtyClass += ' overstock';
+                } else if (isComplete) {
+                    qtyClass += ' complete';
+                } else {
+                    qtyClass += ' incomplete';
+                }
+
                 return `
-                <li class="piece-item ${isComplete ? 'received' : ''}">
+                <li class="${itemClass}">
                     <input type="checkbox" class="piece-checkbox"
                            ${isComplete ? 'checked' : ''}
                            onchange="togglePieceReceived('${kitting.id}', '${p.id}', this.checked)">
                     <div class="piece-info">
                         <span class="piece-name">${escapeHtml(p.name)}</span>
+                        ${isOverstock ? `<span class="overstock-badge">+${overstockQty} surplus</span>` : ''}
                         ${receivedDate ? `<span class="piece-date">Reçu le ${receivedDate}</span>` : ''}
                     </div>
                     <div class="piece-quantity">
-                        <span class="piece-quantity-display ${isComplete ? 'complete' : 'incomplete'}">
+                        <span class="${qtyClass}">
                             ${qtyReceived}/${qtyRequired}
                         </span>
                         <input type="number" class="piece-quantity-input"
@@ -3928,7 +3995,16 @@
                 kitting.status = allReceived && kitting.pieces.length > 0 ? 'pret' : 'incomplet';
 
                 await saveKittingToFirebase(kitting);
-                showToast(`Quantité mise à jour: ${qty}/${qtyRequired}`);
+
+                // Message adapté selon la situation
+                if (qty > qtyRequired) {
+                    const surplus = qty - qtyRequired;
+                    showToast(`Quantité: ${qty}/${qtyRequired} (+${surplus} surplus)`);
+                } else if (qty === qtyRequired) {
+                    showToast(`Quantité complète: ${qty}/${qtyRequired} ✓`);
+                } else {
+                    showToast(`Quantité mise à jour: ${qty}/${qtyRequired}`);
+                }
             }
         }
 
